@@ -1,0 +1,4 @@
+## PHPStorm temporary files
+.idea/
+## Mac OS temporary files
+.DS_Store
