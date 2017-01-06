@@ -9,7 +9,7 @@
 //Auto-chargement des classes PHP
 function __autoload($class){
     $class = str_replace('\\', '/', $class);
-    $path = ABS_PATH."/private/library/{$class}.php";
+    $path = ABS_PATH."/private/{$class}.php";
     if (file_exists($path)) {
         require_once $path;
         return true;
