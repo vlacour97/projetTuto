@@ -13,3 +13,4 @@ define('CONFIG_FILE_NAME','config');
 
 require_once ABS_PATH.'/private/functions/autoloader.php';
 require_once ABS_PATH.'/private/functions/linker.php';
+
