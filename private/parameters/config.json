@@ -6,5 +6,6 @@
     "copyright":"Gestion Stage&copy;",
     "version":"1.0",
     "last_update":"2017-01-26",
-    "admin_mail":"vlacour97@icloud.com"
+    "admin_mail":"vlacour97@icloud.com",
+    "crypt_key":"marmotte"
 }
