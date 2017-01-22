@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `propositions` (
   `zip_code` int(11) NOT NULL,
   `city` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `ville` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `country` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `country` varchar(2) COLLATE utf8mb4_unicode_ci NOT NULL,
   `latitude` double NOT NULL,
   `longitude` double NOT NULL,
   `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
