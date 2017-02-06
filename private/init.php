@@ -11,3 +11,5 @@ define('URL', $_SERVER['HTTP_HOST']);
 
 require_once ABS_PATH.'/private/functions/autoloader.php';
 require_once ABS_PATH.'/private/functions/linker.php';
+
+$html = new \lib\HTML();
