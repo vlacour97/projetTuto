@@ -48,6 +48,8 @@ class BDD {
         self::$prefix = $PDO_data['prefix'];
     }
 
+    //TODO remplacer .* par des as
+
     /**
      * Recherche de propositions
      * @param string $search Champ de recherche
@@ -59,7 +61,7 @@ class BDD {
      */
     static public function search_query($search = "",$country = "",$field = "",$continuity = "",$remuneration = ""){
         self::init();
-        $query = self::$PDO->prepare('SELECT calc_dist(propositions.latitude,propositions.longitude,'.self::$default_lat.','.self::$default_long.') as distance,propositions.*,business.*
+        $query = self::$PDO->prepare('SELECT calc_dist(propositions.latitude,propositions.longitude,'.self::$default_lat.','.self::$default_long.') as distance,propositions.*,business.partner AS partner, business.name AS name
       FROM propositions,business,fields,continuities,linkcontinuities,linkfields
       WHERE linkcontinuities.ID_cont = continuities.id
       AND linkcontinuities.ID_prop = propositions.ID
@@ -82,7 +84,7 @@ class BDD {
             ':continuity' => '%'.$continuity.'%',
             ':remuneration' => '%'.$remuneration.'%'
         ]);
-        return $query->fetchAll(\PDO::FETCH_ASSOC);
+        return DataFormatter::convert_array_to_object($query->fetchAll(\PDO::FETCH_ASSOC));
     }
 
     /**
@@ -97,7 +99,7 @@ class BDD {
   WHERE propositions.ID_ent=business.ID
   AND  business.ID=:business_id');
         $query->execute(array('business_id'=>$business_id));
-        return $query->fetch(\PDO::FETCH_ASSOC);
+        return DataFormatter::convert_array_to_object($query->fetch(\PDO::FETCH_ASSOC));
     }
 
     /**
@@ -108,7 +110,7 @@ class BDD {
         self::init();
         $query = self::$PDO->prepare('SELECT count(propositions.ID) as nb_prop,business.* FROM business,propositions where business.ID=propositions.ID_ent GROUP BY business.ID');
         $query->execute();
-        return $query->fetchAll(\PDO::FETCH_ASSOC);
+        return DataFormatter::convert_array_to_object($query->fetchAll(\PDO::FETCH_ASSOC));
     }
 
     /**
@@ -128,7 +130,7 @@ class BDD {
         $query->execute(array(
             ':business_id' => $business_id
         ));
-        return $query->fetchAll(\PDO::FETCH_ASSOC);
+        return DataFormatter::convert_array_to_object($query->fetchAll(\PDO::FETCH_ASSOC));
     }
 
     /**
@@ -143,7 +145,7 @@ class BDD {
       WHERE propositions.ID_ent = business.ID
       AND propositions.ID = :proposition_id');
         $query->execute(array(':proposition_id' => $proposition_id));
-        return $query->fetch(\PDO::FETCH_ASSOC);
+        return DataFormatter::convert_array_to_object($query->fetch(\PDO::FETCH_ASSOC));
     }
 
     /**
@@ -158,7 +160,7 @@ class BDD {
     AND business.partner = TRUE
     GROUP BY business.ID;');
         $query->execute();
-        return $query->fetchAll(\PDO::FETCH_ASSOC);
+        return DataFormatter::convert_array_to_object($query->fetchAll(\PDO::FETCH_ASSOC));
     }
 
     /**
@@ -170,7 +172,7 @@ class BDD {
         self::init();
         $query = self::$PDO->prepare('SELECT fields.* FROM fields, linkfields WHERE linkfields.id_field=fields.ID AND linkfields.id_prop=:proposition_id');
         $query->execute(array(':proposition_id'=>$proposition_id));
-        return $query->fetchAll(\PDO::FETCH_ASSOC);
+        return DataFormatter::convert_array_to_object($query->fetchAll(\PDO::FETCH_ASSOC));
     }
 
     /**
@@ -182,7 +184,7 @@ class BDD {
         self::init();
         $query = self::$PDO->prepare('SELECT fields.* FROM fields, linkfields, propositions WHERE linkfields.id_field=fields.ID AND linkfields.id_prop=propositions.ID AND propositions.ID_ent=:business_id GROUP BY fields.ID');
         $query->execute(array(':business_id'=>$business_id));
-        return $query->fetchAll(\PDO::FETCH_ASSOC);
+        return DataFormatter::convert_array_to_object($query->fetchAll(\PDO::FETCH_ASSOC));
     }
 
     /**
@@ -194,7 +196,7 @@ class BDD {
         self::init();
         $query = self::$PDO->prepare('SELECT continuities.* FROM continuities, linkcontinuities WHERE linkcontinuities.ID_cont=continuities.id AND linkcontinuities.ID_prop=:proposition_id');
         $query->execute(array(':proposition_id' => $proposition_id));
-        return $query->fetchAll(\PDO::FETCH_ASSOC);
+        return DataFormatter::convert_array_to_object($query->fetchAll(\PDO::FETCH_ASSOC));
     }
 
     /**
@@ -206,7 +208,7 @@ class BDD {
         self::init();
         $query = self::$PDO->prepare('SELECT continuities.* FROM continuities, linkcontinuities, propositions WHERE linkcontinuities.ID_cont=continuities.id AND linkcontinuities.ID_prop = propositions.ID AND propositions.ID_ent=:business_id GROUP BY continuities.id');
         $query->execute(array(':business_id' => $business_id));
-        return $query->fetchAll(\PDO::FETCH_ASSOC);
+        return DataFormatter::convert_array_to_object($query->fetchAll(\PDO::FETCH_ASSOC));
     }
 
-} 
+}
