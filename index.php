@@ -11,4 +11,3 @@ include 'private/init.php';
 $dd = new \lib\PageTemplate();
 $dd->init();
 
-echo '<br>ok</pre>';

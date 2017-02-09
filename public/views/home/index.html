@@ -1,11 +1,547 @@
 <!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title>Whou</title>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kwitara - Bootstrap Real Estate template </title>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="../../css/bootstrap.min.css" type="text/css" /><!-- Bootstrap -->
+    <link rel="stylesheet" href="../../fonts/font-awesome/css/font-awesome.min.css" type="text/css" /><!-- Icons -->
+    <link rel="stylesheet" href="../../fonts/themify-icons/themify-icons.css" type="text/css" /><!-- Icons -->
+    <link rel="stylesheet" href="../../css/owl.carousel.css" type="text/css" /><!-- Owl Carousal-->
+    <link rel="stylesheet" href="../../css/price-range.css" type="text/css" /><!-- Owl Carousal -->
+
+    <link rel="stylesheet" href="../../css/style.css" type="text/css" /><!-- Style -->
+    <link rel="stylesheet" href="../../css/responsive.css" type="text/css" /><!-- Responsive -->
+    <link rel="stylesheet" href="../../css/colors.css" type="text/css" /><!-- color -->
+
+    <!-- REVOLUTION STYLE SHEETS -->
+    <link rel="stylesheet" type="text/css" href="../../js/rs-plugin/css/settings.css">
+
 </head>
-<body>
-<?= $var->val; ?>
-<img src="<?= $var->filePath?>">
+<body >
+    <!-- /.preloader -->
+    <div id="preloader"></div>
+    <div class="theme-layout">
+
+        <div class="account-popup-sec">
+            <div class="account-popup-area">
+                <div class="account-popup">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="account-user">
+                                <div class="logo">
+                                    <a href="#" title="">
+                                        <i class="fa fa-get-pocket"></i>
+                                        <span>Kwitara</span>
+                                        <strong>RENT PROPERTIES</strong>
+                                    </a>
+                                </div><!-- LOGO -->
+                                <form>
+                                    <h4>Login Form</h4>
+                                    <div class="field">
+                                        <input type="text" placeholder="Username" />
+                                    </div>
+                                    <div class="field">
+                                        <input type="password" placeholder="Password" />
+                                    </div>
+                                    <div class="field">
+                                        <input type="submit" value="SEND NOW" class="flat-btn" />
+                                    </div>
+                                </form>
+                                <i>OR</i>
+                                <span>LOGIN WITH</span>
+                                <ul class="social-btns">
+                                    <li><a href="#" title=""><i class="fa fa-facebook"></i></a></li>
+                                    <li><a href="#" title=""><i class="fa fa-google-plus"></i></a></li>
+                                    <li><a href="#" title=""><i class="fa fa-twitter"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="registration-sec">
+                                <h3>SIGNUP Form</h3>
+                                <form>
+                                    <div class="field">
+                                        <input type="text" placeholder="Your Name" />
+                                    </div>
+                                    <div class="field">
+                                        <input type="text" placeholder="Your Email" />
+                                    </div>
+                                    <div class="field">
+                                        <input type="password" placeholder="Type Password" />
+                                    </div>
+                                    <div class="field">
+                                        <input type="password" placeholder="Retype Password" />
+                                    </div>                                   
+                                    <label>
+                                        <input type="checkbox" /> By Clicking on this You are agree with our <a href="#" title="">Terms & Condition</a>
+                                    </label>
+                                    <input type="submit" value="Singup Now" class="flat-btn" />
+                                </form>
+                            </div><!-- Registration sec -->
+                        </div>
+                    </div>
+                    <span class="close-popup"><i class="fa fa-close"></i></span>
+                </div>
+            </div>
+        </div><!-- Account Popup Sec -->
+
+        <header class="simple-header for-sticky ">
+
+            <div class="menu">
+                <div class="container">
+                    <div class="logo">
+                        <a href="index.html" title="">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <i><img src="../img/logo.png"  height="85" width="85"></i>
+                                </div>
+                                <div class="col-md-9">
+                                    <br>
+                                    <span>BusinessHunter</span>
+                                    <strong>Recherche de stage</strong>
+                                </div>
+                            </div>
+                        </a>
+                    </div><!-- LOGO -->
+
+                    <span class="menu-toggle"><i class="fa fa-bars"></i></span>
+                    <nav>
+                        <ul>
+                            <li class="menu-item-has-children">
+                                <a href="index.html" title="">Accueil</a>
+                            </li>
+                        </ul>
+                    </nav>
+
+                </div>
+            </div>
+        </header>
+
+        <section>
+            <div id="map_canvas" class="map big_map"></div>
+        </section>
+
+        <section class="horizontal-search">
+            <div class="container">
+                <div class=""> 
+                    <div class="search-form"> 
+                        <form action="properties.html"  method="get" class="form-inline">   
+                            <div class="search-form-content">
+                                <div class="search-form-field">  
+                                    <div class="form-group col-xs-12 col-sm-3 col-md-4">
+                                            <input type="text" class="form-control" placeholder="Nom De l'Entreprise">
+                                    </div>
+                                    <div class="form-group col-xs-12 col-sm-3 col-md-4">
+                                        <div class="label-select">
+                                            <select class="form-control" name="s_sub_location"> 
+                                                <option>Domaine d'Activité</option>
+                                                <option>...</option>
+                                                <option>...</option>
+                                                <option>...</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-xs-12 col-sm-3 col-md-4">
+                                        <div class="label-select">  
+                                            <select class="form-control" name="s_cat">
+                                                <option>Poursuite</option>
+                                                <option>Alternance</option>
+                                                <option>CDD</option>
+                                                <option>CDI</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-xs-12 col-sm-3 col-md-4">
+                                        <div class="label-select"> 
+                                            <select class="form-control" name="s_statu">
+                                                <option>Rémunération </option>
+                                                <option>Avec</option>
+                                                <option>Sans </option>
+                                            </select>
+                                        </div>
+                                    </div> 
+
+
+                                    <div class="form-group col-xs-12 col-sm-3 col-md-8">
+                                        <span class="garea-label">Distance de Recherche</span>
+                                        <input type="text" class="span2" value="" data-slider-min="0"
+                                               data-slider-max="1000" data-slider-step="10"
+                                               data-slider-value="[100]" id="property-geo" >
+                                    </div>
+                                </div> 
+                            </div>
+                            <div class="search-form-submit">
+                                <button type="submit" class="btn-search">Lancer</button>
+                            </div>
+                        </form>
+                    </div><!-- Services Sec -->
+
+                </div>
+            </div>
+        </section>
+
+        <section class="block remove-top petit ">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="properties-sec">
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <h1><i class="fa fa-arrow-left" aria-hidden="true"></i></h1>
+                                </div>
+
+                                <div class="col-md-10">
+                                    <div class="carousel-prop">
+
+                                        <div class="property-detail case petit">
+
+                                            <img src="../img/logo.png" height="130" width="130" alt="" />
+                                            <h4><a href="property.html" title="The Helux villa">Nom de l'entreprise</a></h4>
+                                            <i class="fa fa-map-marker  color-red" aria-hidden="true"></i> Localisation
+                                            <br>
+                                            <br>Hacque adfabilitate confisus cum eadem
+                                            <br>postridie feceris, ut incognitus haerebis
+
+
+                                        </div>
+                                        <div class="property-detail case petit">
+
+                                            <img src="../img/logo.png" height="130" width="130" alt="" />
+                                            <h4><a href="property.html" title="The Helux villa">Nom de l'entreprise</a></h4>
+                                            <i class="fa fa-map-marker  color-red" aria-hidden="true"></i> Localisation
+                                            <br>
+                                            <br>Hacque adfabilitate confisus cum eadem
+                                            <br>postridie feceris, ut incognitus haerebis
+
+                                        </div>
+                                        <div class="property-detail case petit ">
+
+                                            <img src="../img/logo.png" height="130" width="130" alt="" />
+                                            <h4><a href="property.html" title="The Helux villa">Nom de l'entreprise</a></h4>
+                                            <i class="fa fa-map-marker  color-red" aria-hidden="true"></i> Localisation
+                                            <br>
+                                            <br>Hacque adfabilitate confisus cum eadem
+                                            <br>postridie feceris, ut incognitus haerebis
+
+
+                                        </div>
+                                        <div class="property-detail case petit">
+
+                                            <img src="../img/logo.png" height="130" width="130" alt="" />
+                                            <h4><a href="property.html" title="The Helux villa">Nom de l'entreprise</a></h4>
+                                            <i class="fa fa-map-marker  color-red" aria-hidden="true"></i> Localisation
+                                            <br>
+                                            <br>Hacque adfabilitate confisus cum eadem
+                                            <br>postridie feceris, ut incognitus haerebis
+
+
+                                        </div>
+                                        <div class="property-detail case petit ">
+
+                                            <img src="../img/logo.png" height="130" width="130" alt="" />
+                                            <h4><a href="property.html" title="The Helux villa">Nom de l'entreprise</a></h4>
+                                            <i class="fa fa-map-marker  color-red" aria-hidden="true"></i> Localisation
+                                            <br>
+                                            <br>Hacque adfabilitate confisus cum eadem
+                                            <br>postridie feceris, ut incognitus haerebis
+
+
+                                        </div>
+
+                                    </div><!-- Carousel -->
+
+                                </div>
+
+                                <div class="col-md-1">
+                                    <h1><i class="fa fa-arrow-right" aria-hidden="true"></i></h1>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section >
+
+
+
+        <section class="block remove-top bordgris petit">
+            <div  style="background: grey ; background-attachment: fixed;" class="parallax scrolly-invisible  whitish"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="properties-sec">
+                            <div class="block petit"></div>
+
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <h1><i class="fa fa-arrow-left color-blanc" aria-hidden="true"></i></h1>
+                                </div>
+                                <div class="col-md-10">
+
+
+                                            <div class="carousel-prop">
+                                            <div class="property-detail blanc case  petit ">
+
+                                                <img src="../img/logo.png" height="130" width="130" alt="" />
+                                                <h4><a href="property.html" title="The Helux villa">Nom de l'entreprise</a></h4>
+                                                <i class="fa fa-map-marker  color-red" aria-hidden="true"></i> Localisation
+                                                <br>
+                                                <br>Hacque adfabilitate confisus cum eadem
+                                                <br>postridie feceris, ut incognitus haerebis
+
+
+                                            </div>
+                                            <div class="property-detail blanc case petit ">
+
+                                                <img src="../img/logo.png" height="130" width="130" alt="" />
+                                                <h4><a href="property.html" title="The Helux villa">Nom de l'entreprise</a></h4>
+                                                <i class="fa fa-map-marker  color-red" aria-hidden="true"></i> Localisation
+                                                <br>
+                                                <br>Hacque adfabilitate confisus cum eadem
+                                                <br>postridie feceris, ut incognitus haerebis
+
+
+                                            </div>
+                                            <div class="property-detail blanc case petit ">
+
+                                                <img src="../img/logo.png" height="130" width="130" alt="" />
+                                                <h4><a href="property.html" title="The Helux villa">Nom de l'entreprise</a></h4>
+                                                <i class="fa fa-map-marker  color-red" aria-hidden="true"></i> Localisation
+                                                <br>
+                                                <br>Hacque adfabilitate confisus cum eadem
+                                                <br>postridie feceris, ut incognitus haerebis
+
+
+                                            </div>
+                                            <div class="property-detail blanc case petit ">
+
+                                                <img src="../img/logo.png" height="130" width="130" alt="" />
+                                                <h4><a href="property.html" title="The Helux villa">Nom de l'entreprise</a></h4>
+                                                <i class="fa fa-map-marker  color-red" aria-hidden="true"></i> Localisation
+                                                <br>
+                                                <br>Hacque adfabilitate confisus cum eadem
+                                                <br>postridie feceris, ut incognitus haerebis
+
+
+                                            </div>
+                                            <div class="property-detail blanc case petit ">
+
+                                                <img src="../img/logo.png" height="130" width="130" alt="" />
+                                                <h4><a href="property.html" title="The Helux villa">Nom de l'entreprise</a></h4>
+                                                <i class="fa fa-map-marker  color-red" aria-hidden="true"></i> Localisation
+                                                <br>
+                                                <br>Hacque adfabilitate confisus cum eadem
+                                                <br>postridie feceris, ut incognitus haerebis
+
+
+                                            </div>
+                                        </div><!-- Carousel -->
+                                </div>
+                                <div class="col-md-1">
+                                    <h1><i class="fa fa-arrow-right color-blanc" aria-hidden="true"></i></h1>
+                                </div>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section >
+
+
+
+
+
+        <section class="block petit petitt">
+            <div  style="background: transparent url(../img/home1.jpg) repeat scroll 50% 0px; background-attachment: fixed;" class="parallax scrolly-invisible  whitish"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="heading4">
+                            <h2>NOTRE EQUIPE</h2>
+
+                        </div>
+                        <div class="agents-carousal-sec">
+                            <ul class="carousel">
+                                <li>
+                                    <div class="agent-content">
+                                        <a href="agent.html"><img src="../img/agents/agent1.jpg" alt="" /></a>
+                                        <h3>VALENTIN LACOUR</h3>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="agent-content">
+                                        <a href="agent.html"><img src="../img/agents/agent1.jpg" alt="" /></a>
+                                        <h3>YURI KARPOYAN</h3>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="agent-content">
+                                        <a href="agent.html"><img src="../img/agents/agent1.jpg" alt="" /></a>
+                                        <h3>EDOUARD RICHARD</h3>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="agent-content">
+                                        <a href="agent.html"><img src="../img/agents/valb.jpg" alt="" /></a>
+                                        <h3>VALENTIN BILLAUD</h3>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="agent-content">
+                                        <a href="agent.html"><img src="../img/agents/agent1.jpg" alt="" /></a>
+                                        <h3>REMI LEMAIRE</h3>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="agent-content">
+                                        <a href="agent.html"><img src="../img/agents/agent1.jpg" alt="" /></a>
+                                        <h3>ANTOINE DUBOIS</h3>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="block">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="agents-carousal-sec">
+                            <div class="heading4">
+                                <h2>NOS PARTENAIRES </h2>
+
+                            </div>
+                            <div class="our-clients-sec">
+                                <ul class="carousel-client">
+                                    <li>
+                                        <a href="#" title=""><img src="../img/clients/our-client1.jpg" alt="" /></a>
+                                    </li>
+                                    <li>
+                                        <a href="#" title=""><img src="../img/clients/our-client2.jpg" alt="" /></a>
+                                    </li>
+                                    <li>
+                                        <a href="#" title=""><img src="../img/clients/our-client3.jpg" alt="" /></a>
+                                    </li>
+                                    <li>
+                                        <a href="#" title=""><img src="../img/clients/our-client4.jpg" alt="" /></a>
+                                    </li>
+                                    <li>
+                                        <a href="#" title=""><img src="../img/clients/our-client5.jpg" alt="" /></a>
+                                    </li>
+                                    <li>
+                                        <a href="#" title=""><img src="../img/clients/our-client1.jpg" alt="" /></a>
+                                    </li>
+                                    <li>
+                                        <a href="#" title=""><img src="../img/clients/our-client3.jpg" alt="" /></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>    
+
+        <footer>
+
+            <div class="bottom-line">
+                <div class="container">
+                    <span>Copyright All Right Reserved 2016 </span>
+                    <ul>
+                        <li><a title="" href="#">ACCUEIL</a></li>
+                        <li><a title="" href="#">PLAN DU SITE</a></li>
+                        <li><a title="" href="#">A PROPOS</a></li>
+                        <li><a title="" href="#">CONTACT</a></li>
+                    </ul>
+                </div>
+            </div>
+            <a href="#" class="scrollToTop"><i class="ti ti-arrow-circle-up"></i></a>
+        </footer>
+
+    </div>
+
+    <!-- Script -->
+    <script type="text/javascript" src="../../js/modernizr.js"></script><!-- Modernizer -->
+    <script type="text/javascript" src="../../js/jquery-1.10.2.min.js"></script><!-- Jquery -->
+    <script type="text/javascript" src="../../js/bootstrap.min.js"></script><!-- Bootstrap -->
+    <script type="text/javascript" src="../../js/owl.carousel.min.js"></script><!-- Owl Carousal -->
+    <script type="text/javascript" src="../../js/html5lightbox.js"></script><!-- HTML -->
+    <script type="text/javascript" src="../../js/scrolly.js"></script><!-- Parallax -->
+    <script type="text/javascript" src="../../js/price-range.js"></script><!-- Parallax -->
+    <script type="text/javascript" src="../../js/script.js"></script><!-- Script -->
+
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script src="../../js/infobox.js"></script><!-- Parallax -->
+    <script src="../../js/data.json"></script>
+    <script src="../../js/markerclusterer.js"></script>
+    <script src="../../js/markers-map.js"></script>
+
+    <script>
+        google.maps.event.addDomListener(window, 'load', speedTest.init);
+    </script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            "use strict";
+
+            $(".carousel-prop").owlCarousel({
+                autoplay: true,
+                autoplayTimeout: 3000,
+                smartSpeed: 2000,
+                loop: true,
+                dots: true,
+                nav: false,
+                items: 4,
+                itemsCustom: false,
+                itemsDesktop: [1199, 3],
+                itemsDesktopSmall: [980, 2],
+                itemsTablet: [768, 2],
+                itemsTabletSmall: false,
+                itemsMobile: [479, 1],
+                itemsScaleUp: false
+
+            });
+
+
+            $(".carousel").owlCarousel({
+                autoplay: true,
+                autoplayTimeout: 3000,
+                smartSpeed: 2000,
+                loop: false,
+                dots: false,
+                nav: true,
+                margin: 0,
+                items: 3
+            });
+
+            $(".carousel-client").owlCarousel({
+                autoplay: true,
+                autoplayTimeout: 3000,
+                smartSpeed: 2000,
+                loop: false,
+                dots: false,
+                items: 5,
+                itemsCustom: false,
+                itemsDesktop: [1199, 5],
+                itemsDesktopSmall: [980, 3],
+                itemsTablet: [768, 2],
+                itemsTabletSmall: false,
+                itemsMobile: [479, 1],
+                itemsScaleUp: false
+            });
+
+        });
+    </script>
 </body>
 </html>
+<!-- Localized -->

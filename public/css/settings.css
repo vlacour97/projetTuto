@@ -2341,11 +2341,11 @@ zoom: 1;
 
 @font-face {
   font-family: 'revicons';
-  src: url('../font/revicons-5510888.eot');
-  src: url('../font/revicons-5510888.eot#iefix') format('embedded-opentype'),
-       url('../font/revicons-5510888.woff') format('woff'),
-       url('../font/revicons-5510888.ttf') format('truetype'),
-       url('../font/revicons-5510888.svg#revicons') format('svg');
+  src: url('../fonts/revicons-5510888.eot');
+  src: url('../fonts/revicons-5510888.eot#iefix') format('embedded-opentype'),
+       url('../fonts/revicons-5510888.woff') format('woff'),
+       url('../fonts/revicons-5510888.ttf') format('truetype'),
+       url('../fonts/revicons-5510888.svg#revicons') format('svg');
   font-weight: normal;
   font-style: normal;
 }
