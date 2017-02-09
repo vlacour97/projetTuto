@@ -54,4 +54,14 @@ Class DataFormatter{
             }
         }
     }
+
+    static public function convert_array_to_object($array){
+        $return = new \stdClass();
+        foreach ($array as $key=>$value)
+            if(is_array($value))
+                $return->$key = DataFormatter::convert_array_to_object($value);
+            else
+                $return->$key = $value;
+        return $return;
+    }
 }
