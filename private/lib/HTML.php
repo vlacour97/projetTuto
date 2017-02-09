@@ -32,7 +32,7 @@ class HTML
     function script($filename)
     {
         $part = explode(".", $filename);
-        if( $part[count($part)-1]  != "js" )
+        if( $part[count($part)-1]  != "js"  )
             return false;
         if (!filter_var($filename, FILTER_VALIDATE_URL))
         {

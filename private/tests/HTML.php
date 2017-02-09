@@ -8,4 +8,4 @@
 
 include '../init.php';
 
-var_dump($html->script('main.js'));
+var_dump($html->script('main.js')); 
