@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+Salut et bienvenue dans login
+<table>
+    <thead>
+    <tr>
+        <td>Distance</td>
+        <td>Nom</td>
+        <td>Entreprise</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr <? if($var->data->partner) echo "class='red'" ?>>
+    <td><?= round($var->data->distance); ?> km</td>
+    <td><?= $var->data->label; ?></td>
+    <td><?= $this->_setLink($var->business->name,['nav'=>'business','part'=>'business','id'=>$var->business->ID],['title'=>$var->business->name])?></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

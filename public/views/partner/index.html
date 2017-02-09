@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<h1>Bonjour </h1>
+<h3>Liste des partenaires :</h3>
+<? foreach($var->partnerList as $value) { ?>
+    <?= $this->_setLink($value->name,['nav'=>'partner','part'=>'item','id'=>$value->ID],['class'=>'red']) ?><br>
+<? } ?>
+</body>
+</html>

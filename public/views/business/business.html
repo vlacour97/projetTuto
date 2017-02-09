@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title><?= $var->global->site_name ?></title>
+</head>
+<body>
+<h1><?= $var->business->name ?></h1>
+<h3>Nombre de propositions : <?= $var->business->nb_prop ?></h3>
+<img src="<?= $var->img_src ?>" width="50%%"><br>
+<? foreach($var->proposition as $value){ ?>
+<?= $this->_setLink($value->label,['part'=>'article','item'=>$value->ID]) ?><br>
+<? } ?>
+<br>
+<?= $this->_setLink('Retour',['part'=>'index']) ?>
+</body>
+</html>

@@ -1,0 +1,41 @@
+#debug-btn{
+    z-index: 999;
+    position: fixed;
+    bottom: 10px; right: 10px;
+    width: 70px; height: 70px;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.dark{
+    background: #232323;
+    color: #FFF;
+    -moz-box-shadow: 0px 10px 50px 10px #656565;
+    -webkit-box-shadow: 0px 10px 50px 10px #656565;
+    -o-box-shadow: 0px 10px 50px 10px #656565;
+    box-shadow: 0px 10px 50px 10px #656565;
+    filter:progid:DXImageTransform.Microsoft.Shadow(color=#656565, Direction=180, Strength=50);
+}
+
+.clear{
+    background: #FFF;
+    color: #232323;
+}
+
+#debug-btn i{
+    position: relative;
+    top: 18px;
+}
+
+#debug-box{
+    background: #232323;
+    color: #FFF;
+    position: fixed;
+    top: 0; left:0;
+    width: 100%; height: 100%;
+    overflow-y: auto;
+    padding: 1em;
+    display: none;
+}
