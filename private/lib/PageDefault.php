@@ -13,12 +13,13 @@ class PageDefault {
 
     protected function header(){
         $html = new HTML();
+        $config = new \lib\Config();
         echo '<!DOCTYPE html>';
         echo '<head>';
         echo $html->meta(['http-equiv'=>'Content-Type', 'content' => 'text/html; charset=utf-8']);
         echo $html->meta(['name'=>'viewport', 'content' => 'width=device-width, initial-scale=1.0']);
         echo $html->meta(['name' => 'viewport']);
-        echo '<title>Kwitara - Bootstrap Real Estate template </title>';
+        echo '<title>'.$config->getName().'</title>';
         echo $html->css('bootstrap.min.css');
         echo $html->css('font-awesome.min.css');
         echo $html->css('themify-icons.css');
@@ -26,27 +27,61 @@ class PageDefault {
         echo $html->css('price-range.css');
         echo $html->css('style.css');
         echo $html->css('responsive.css');
-        echo $html->css('color.css');
+        echo $html->css('colors.css');
         echo $html->css('settings.css');
+        echo $html->script('modernizr.js');
+        echo $html->script('jquery-1.10.2.min.js');
+        echo $html->script('bootstrap.min.js');
         echo '</head>';
+        echo '<body >';
+        //preloader
+        echo '<div id="preloader"></div>';
+        echo '<div class="theme-layout">';
+
     }
 
     protected function nav(){
-        echo "<div class='nav'>NavigationTest</div>";
+        echo '<header class="simple-header for-sticky ">
+
+            <div class="menu">
+                <div class="container">
+                    <div class="logo">
+                        <a href="?nav=home" title="Accueil">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <i><img src="public/img/logo.png"  height="85" width="85"></i>
+                                </div>
+                                <div class="col-md-9">
+                                    <br>
+                                    <span>BusinessHunter</span>
+                                    <strong>Recherche de stage</strong>
+                                </div>
+                            </div>
+                        </a>
+                    </div><!-- LOGO -->
+
+                    <span class="menu-toggle"><i class="fa fa-bars"></i></span>
+                    <nav>
+                        <ul>
+                            <li>
+                                <a href="?nav=home" title="">Accueil</a>
+                            </li>
+                        </ul>
+                    </nav>
+
+                </div>
+            </div>
+        </header>';
     }
 
     protected function footer(){
         $html = new HTML();
-        echo $html->script('modernizr.js');
-        echo $html->script('jquery-1.10.2.min.js');
-        echo $html->script('bootstrap.min.js');
+        $config = new \lib\Config();
         echo $html->script('owl.carousel.min.js');
-        echo $html->script('html5lightbox.js');
         echo $html->script('scrolly.js');
         echo $html->script('price-range.js');
         echo $html->script('script.js');
-
-        echo $html->script('https://maps.googleapis.com/maps/api/js');
+        echo $html->script('https://maps.googleapis.com/maps/api/js?key='.$config->getApiKeyGmaps().'&callback=initMap');
         echo $html->script('infobox.js');
         echo $html->script('markerclusterer.js');
         echo $html->script('markers-map.js');

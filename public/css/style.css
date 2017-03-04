@@ -2837,6 +2837,11 @@ header.white > .menu {
     -o-border-radius: 50px;
     border-radius: 50px;
 }
+
+.menu-toggle i{
+    padding-top: 15px;
+}
+
 header.white .menu-item-has-children > ul > li:hover {
     background: #fff none repeat scroll 0 0;
 }
@@ -3759,6 +3764,7 @@ footer.light-footer .bottom-line a {
 .search-form-submit {
     position: relative;
     text-align: center;
+    top: -15px;
 }
 .slider-selection { 
     background: none repeat scroll 0 0 #FF2929;
@@ -4335,3 +4341,6 @@ font-size: 16px;
 {
     overflow-x:scroll
 }
+
+.mt-sm{  margin-top: 2em;  }
+.mt-md{  margin-top: 2em;  }

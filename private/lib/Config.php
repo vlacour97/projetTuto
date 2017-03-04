@@ -21,6 +21,7 @@ class Config extends DataFormatter{
     public $admin_mail;
     public $crypt_key;
     public $debug_mod;
+    public $api_key_gmaps;
 
     public $dates = ['last_update'];
     public $bool = ['debug_mod'];
@@ -109,4 +110,11 @@ class Config extends DataFormatter{
         return $this->debug_mod;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getApiKeyGmaps()
+    {
+        return $this->api_key_gmaps;
+    }
 } 

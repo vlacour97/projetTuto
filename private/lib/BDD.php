@@ -43,7 +43,7 @@ class BDD {
         if(self::$init)
             return true;
         $PDO_data = link_parameters('app/bd_datas');
-        self::$PDO = new \PDO('mysql:dbname='.$PDO_data['db_name'].';host='.$PDO_data['host'],$PDO_data['login'],$PDO_data['password']);
+        self::$PDO = new \PDO('mysql:dbname='.$PDO_data['db_name'].';host='.$PDO_data['host'].';charset=utf8',$PDO_data['login'],$PDO_data['password']);
         self::$init = true;
         self::$prefix = $PDO_data['prefix'];
     }
@@ -59,24 +59,31 @@ class BDD {
      * @param string $remuneration Possibilité de rémunération (0 => NSP, 1=> Oui, 2=> Non)
      * @return array
      */
-    static public function search_query($search = "",$country = "",$field = "",$continuity = "",$remuneration = ""){
+    static public function search_query($partner= null, $search = "",$country = "",$field = "",$continuity = "",$remuneration = ""){
         self::init();
-        $query = self::$PDO->prepare('SELECT calc_dist(propositions.latitude,propositions.longitude,'.self::$default_lat.','.self::$default_long.') as distance,propositions.*,business.partner AS partner, business.name AS name
+        $query_def = 'SELECT calc_dist(propositions.latitude,propositions.longitude,'.self::$default_lat.','.self::$default_long.') as distance,propositions.*,business.partner AS partner, business.name AS name
       FROM propositions,business,fields,continuities,linkcontinuities,linkfields
-      WHERE linkcontinuities.ID_cont = continuities.id
-      AND linkcontinuities.ID_prop = propositions.ID
-      AND linkfields.id_field=fields.ID
-      AND linkfields.id_prop=propositions.ID
-      AND propositions.ID_ent = business.ID
+      WHERE propositions.ID_ent = business.ID
       AND (business.name like :search OR propositions.label LIKE :search)
       AND propositions.country LIKE :country
       AND fields.id LIKE :field
       AND continuities.id LIKE :continuity
       AND propositions.remuneration LIKE :remuneration
-      GROUP BY propositions.ID
+      AND propositions.deletion_date is null
+      AND business.deletion_date is null ';
+        switch($partner){
+            case true:
+                $query_def .= 'AND business.partner = 1 ';
+                break;
+            case false:
+                !($partner === null) && $query_def .= 'AND business.partner = 0 ';
+                break;
+        }
+        $query_def .= 'GROUP BY propositions.ID
       ORDER BY business.partner DESC,
       distance,
-      propositions.creation_date DESC');
+      propositions.creation_date DESC';
+        $query = self::$PDO->prepare($query_def);
         $query->execute([
             ':search' => '%'.$search.'%',
             ':country' => '%'.$country.'%',
@@ -85,6 +92,7 @@ class BDD {
             ':remuneration' => '%'.$remuneration.'%'
         ]);
         return DataFormatter::convert_array_to_object($query->fetchAll(\PDO::FETCH_ASSOC));
+
     }
 
     /**
@@ -120,7 +128,7 @@ class BDD {
      */
     static public function get_business_prop_list($business_id){
         self::init();
-        $query = self::$PDO->prepare('SELECT calc_dist(propositions.latitude,propositions.longitude,'.self::$default_lat.','.self::$default_long.') AS distance,propositions.*
+        $query = self::$PDO->prepare('SELECT calc_dist(propositions.latitude,propositions.longitude,'.self::$default_lat.','.self::$default_long.') AS distance,propositions.*, business.phone as phone, business.mail as mail,  business.name as name
       FROM business, propositions
       WHERE propositions.ID_ent = business.ID
       AND business.ID = :business_id
@@ -140,7 +148,7 @@ class BDD {
      */
     static public function get_proposition_info($proposition_id){
         self::init();
-        $query = self::$PDO->prepare('SELECT calc_dist(propositions.latitude,propositions.longitude,'.self::$default_lat.','.self::$default_long.') AS distance,propositions.*, business.*
+        $query = self::$PDO->prepare('SELECT calc_dist(propositions.latitude,propositions.longitude,'.self::$default_lat.','.self::$default_long.') AS distance,propositions.*, business.phone as phone, business.mail as mail, business.name as name
       FROM business, propositions
       WHERE propositions.ID_ent = business.ID
       AND propositions.ID = :proposition_id');
@@ -156,8 +164,7 @@ class BDD {
         self::init();
         $query = self::$PDO->prepare('SELECT count(propositions.ID) as nb_prop,business.*
     FROM business,propositions
-    WHERE business.ID=propositions.ID_ent
-    AND business.partner = TRUE
+    WHERE business.partner = TRUE
     GROUP BY business.ID;');
         $query->execute();
         return DataFormatter::convert_array_to_object($query->fetchAll(\PDO::FETCH_ASSOC));
@@ -208,6 +215,28 @@ class BDD {
         self::init();
         $query = self::$PDO->prepare('SELECT continuities.* FROM continuities, linkcontinuities, propositions WHERE linkcontinuities.ID_cont=continuities.id AND linkcontinuities.ID_prop = propositions.ID AND propositions.ID_ent=:business_id GROUP BY continuities.id');
         $query->execute(array(':business_id' => $business_id));
+        return DataFormatter::convert_array_to_object($query->fetchAll(\PDO::FETCH_ASSOC));
+    }
+
+    /**
+     * Récupére la liste des poursuites possibles dans les entreprises
+     * @return \stdClass
+     */
+    static public function get_continuities_list(){
+        self::init();
+        $query = self::$PDO->prepare('SELECT * FROM continuities');
+        $query->execute();
+        return DataFormatter::convert_array_to_object($query->fetchAll(\PDO::FETCH_ASSOC));
+    }
+
+    /**
+     * Récupére la liste des domaines d'activité disponible
+     * @return \stdClass
+     */
+    static public function get_fields_list(){
+        self::init();
+        $query = self::$PDO->prepare('SELECT * FROM fields');
+        $query->execute();
         return DataFormatter::convert_array_to_object($query->fetchAll(\PDO::FETCH_ASSOC));
     }
 

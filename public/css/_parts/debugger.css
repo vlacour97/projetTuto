@@ -1,5 +1,5 @@
 #debug-btn{
-    z-index: 10000;
+    z-index: 10000; !important;
     position: fixed;
     bottom: 10px; right: 10px;
     width: 70px; height: 70px;
@@ -30,6 +30,7 @@
 }
 
 #debug-box{
+    z-index: 9999; !important;
     background: #232323;
     color: #FFF;
     position: fixed;

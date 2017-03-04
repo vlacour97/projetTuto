@@ -148,13 +148,14 @@ class PageTemplate extends PageDefault{
         //Vérification et chargement de la vue
         if(!is_file($view_path))
             $this->_redirect($this::default_part_name,$this::default_navigation_name);
+
+        //Chargement des composants de developpement
+        if($this->global->config->getDebugMod()) $this->showDebugger($var);
+
         $controller_object->header();
         $controller_object->nav();
         include($view_path);
         $controller_object->footer();
-
-        //Chargement des composants de developpement
-        if($this->global->config->getDebugMod()) $this->showDebugger($var);
     }
 
     /**

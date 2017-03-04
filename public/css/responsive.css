@@ -48,6 +48,7 @@
         float: left;
         padding: 17px 30px;
         width: 100%;
+        color: #777777;
     }
     .menu-item-has-children > ul {
         float: left;
