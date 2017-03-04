@@ -1,4 +1,4 @@
-var GoogleMap = {"latitude": "48.856594665513285", "longitude": "2.3521997407078743"};
+var GoogleMap = {"latitude": "49.89", "longitude": "2.295"};
 var map;
 var infowindow;
 var marker;

@@ -1,102 +1,3 @@
-<body >
-    <!-- /.preloader -->
-    <div id="preloader"></div>
-    <div class="theme-layout">
-
-        <div class="account-popup-sec">
-            <div class="account-popup-area">
-                <div class="account-popup">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="account-user">
-                                <div class="logo">
-                                    <a href="#" title="">
-                                        <i class="fa fa-get-pocket"></i>
-                                        <span>Kwitara</span>
-                                        <strong>RENT PROPERTIES</strong>
-                                    </a>
-                                </div><!-- LOGO -->
-                                <form>
-                                    <h4>Login Form</h4>
-                                    <div class="field">
-                                        <input type="text" placeholder="Username" />
-                                    </div>
-                                    <div class="field">
-                                        <input type="password" placeholder="Password" />
-                                    </div>
-                                    <div class="field">
-                                        <input type="submit" value="SEND NOW" class="flat-btn" />
-                                    </div>
-                                </form>
-                                <i>OR</i>
-                                <span>LOGIN WITH</span>
-                                <ul class="social-btns">
-                                    <li><a href="#" title=""><i class="fa fa-facebook"></i></a></li>
-                                    <li><a href="#" title=""><i class="fa fa-google-plus"></i></a></li>
-                                    <li><a href="#" title=""><i class="fa fa-twitter"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="registration-sec">
-                                <h3>SIGNUP Form</h3>
-                                <form>
-                                    <div class="field">
-                                        <input type="text" placeholder="Your Name" />
-                                    </div>
-                                    <div class="field">
-                                        <input type="text" placeholder="Your Email" />
-                                    </div>
-                                    <div class="field">
-                                        <input type="password" placeholder="Type Password" />
-                                    </div>
-                                    <div class="field">
-                                        <input type="password" placeholder="Retype Password" />
-                                    </div>                                   
-                                    <label>
-                                        <input type="checkbox" /> By Clicking on this You are agree with our <a href="#" title="">Terms & Condition</a>
-                                    </label>
-                                    <input type="submit" value="Singup Now" class="flat-btn" />
-                                </form>
-                            </div><!-- Registration sec -->
-                        </div>
-                    </div>
-                    <span class="close-popup"><i class="fa fa-close"></i></span>
-                </div>
-            </div>
-        </div><!-- Account Popup Sec -->
-
-        <header class="simple-header for-sticky ">
-
-            <div class="menu">
-                <div class="container">
-                    <div class="logo">
-                        <a href="index.html" title="">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <i><img src="../img/logo.png"  height="85" width="85"></i>
-                                </div>
-                                <div class="col-md-9">
-                                    <br>
-                                    <span>BusinessHunter</span>
-                                    <strong>Recherche de stage</strong>
-                                </div>
-                            </div>
-                        </a>
-                    </div><!-- LOGO -->
-
-                    <span class="menu-toggle"><i class="fa fa-bars"></i></span>
-                    <nav>
-                        <ul>
-                            <li class="menu-item-has-children">
-                                <a href="index.html" title="">Accueil</a>
-                            </li>
-                        </ul>
-                    </nav>
-
-                </div>
-            </div>
-        </header>
 
         <section>
             <div id="map_canvas" class="map big_map"></div>
@@ -106,52 +7,55 @@
             <div class="container">
                 <div class=""> 
                     <div class="search-form"> 
-                        <form action="properties.html"  method="get" class="form-inline">   
-                            <div class="search-form-content">
-                                <div class="search-form-field">  
-                                    <div class="form-group col-xs-12 col-sm-3 col-md-4">
-                                            <input type="text" class="form-control" placeholder="Nom De l'Entreprise">
+                        <form action="index.php"  method="get" class="form-inline">
+                            <div class="search-form-content col-md-12">
+                                <div class="search-form-field">
+                                    <div class="form-group col-xs-12 col-sm-3 col-md-6">
+                                            <input type="search" class="form-control" name="q_business_name" value="<?= $var->global->get->q_business_name ?>" placeholder="Nom De l'Entreprise">
                                     </div>
-                                    <div class="form-group col-xs-12 col-sm-3 col-md-4">
+                                    <div class="form-group col-xs-12 col-sm-3 col-md-6">
                                         <div class="label-select">
-                                            <select class="form-control" name="s_sub_location"> 
-                                                <option>Domaine d'Activité</option>
-                                                <option>...</option>
-                                                <option>...</option>
-                                                <option>...</option>
+                                            <select class="form-control" name="q_fields">
+                                                <option value="">Domaine d'Activité</option>
+                                                <? foreach($var->fields as $content) { ?>
+                                                    <option value="<?= $content->ID; ?>" <? if($var->global->get->q_fields == $content->ID) echo 'selected'; ?> ><?= $content->label; ?></option>
+                                                <? } ?>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="form-group col-xs-12 col-sm-3 col-md-4">
                                         <div class="label-select">  
-                                            <select class="form-control" name="s_cat">
-                                                <option>Poursuite</option>
-                                                <option>Alternance</option>
-                                                <option>CDD</option>
-                                                <option>CDI</option>
+                                            <select class="form-control" name="q_continuities">
+                                                <option value="">Poursuite possible</option>
+                                                <? foreach($var->continuities as $content) { ?>
+                                                <option value="<?= $content->id; ?>" <? if($var->global->get->q_continuities == $content->id) echo 'selected'; ?> ><?= $content->label; ?></option>
+                                                <? } ?>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="form-group col-xs-12 col-sm-3 col-md-4">
                                         <div class="label-select"> 
-                                            <select class="form-control" name="s_statu">
-                                                <option>Rémunération </option>
-                                                <option>Avec</option>
-                                                <option>Sans </option>
+                                            <select class="form-control" name="q_remuneration">
+                                                <option value="" <? if($var->global->get->q_remuneration == 0) echo 'selected'; ?>>Rémunération </option>
+                                                <option value="1" <? if($var->global->get->q_remuneration == 1) echo 'selected'; ?>>Avec</option>
+                                                <option value="2" <? if($var->global->get->q_remuneration == 2) echo 'selected'; ?>>Sans </option>
                                             </select>
                                         </div>
-                                    </div> 
+                                    </div>
 
-
-                                    <div class="form-group col-xs-12 col-sm-3 col-md-8">
-                                        <span class="garea-label">Distance de Recherche</span>
-                                        <input type="text" class="span2" value="" data-slider-min="0"
-                                               data-slider-max="1000" data-slider-step="10"
-                                               data-slider-value="[100]" id="property-geo" >
+                                    <div class="form-group col-xs-12 col-sm-3 col-md-4">
+                                        <div class="label-select">
+                                            <select class="form-control" name="q_country">
+                                                <option value="">Pays </option>
+                                                <? foreach($var->countries as $key=>$content) { ?>
+                                                <option value="<?= $key ?>" <? if($var->global->get->q_country == $key) echo 'selected'; ?> ><?= $content; ?></option>
+                                                <? } ?>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div> 
                             </div>
-                            <div class="search-form-submit">
+                            <div class="search-form-submit col-md-12 ">
                                 <button type="submit" class="btn-search">Lancer</button>
                             </div>
                         </form>
@@ -161,174 +65,125 @@
             </div>
         </section>
 
-        <section class="block remove-top petit ">
+        <section class="block remove-top petit " id="partner_list">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-12">
-
-                        <div class="properties-sec">
-                            <div class="row">
-                                <div class="col-md-1">
-                                    <h1><i class="fa fa-arrow-left" aria-hidden="true"></i></h1>
-                                </div>
-
-                                <div class="col-md-10">
-                                    <div class="carousel-prop">
-
-                                        <div class="property-detail case petit">
-
-                                            <img src="../img/logo.png" height="130" width="130" alt="" />
-                                            <h4><a href="property.html" title="The Helux villa">Nom de l'entreprise</a></h4>
-                                            <i class="fa fa-map-marker  color-red" aria-hidden="true"></i> Localisation
-                                            <br>
-                                            <br>Hacque adfabilitate confisus cum eadem
-                                            <br>postridie feceris, ut incognitus haerebis
-
-
-                                        </div>
-                                        <div class="property-detail case petit">
-
-                                            <img src="../img/logo.png" height="130" width="130" alt="" />
-                                            <h4><a href="property.html" title="The Helux villa">Nom de l'entreprise</a></h4>
-                                            <i class="fa fa-map-marker  color-red" aria-hidden="true"></i> Localisation
-                                            <br>
-                                            <br>Hacque adfabilitate confisus cum eadem
-                                            <br>postridie feceris, ut incognitus haerebis
-
-                                        </div>
-                                        <div class="property-detail case petit ">
-
-                                            <img src="../img/logo.png" height="130" width="130" alt="" />
-                                            <h4><a href="property.html" title="The Helux villa">Nom de l'entreprise</a></h4>
-                                            <i class="fa fa-map-marker  color-red" aria-hidden="true"></i> Localisation
-                                            <br>
-                                            <br>Hacque adfabilitate confisus cum eadem
-                                            <br>postridie feceris, ut incognitus haerebis
-
-
-                                        </div>
-                                        <div class="property-detail case petit">
-
-                                            <img src="../img/logo.png" height="130" width="130" alt="" />
-                                            <h4><a href="property.html" title="The Helux villa">Nom de l'entreprise</a></h4>
-                                            <i class="fa fa-map-marker  color-red" aria-hidden="true"></i> Localisation
-                                            <br>
-                                            <br>Hacque adfabilitate confisus cum eadem
-                                            <br>postridie feceris, ut incognitus haerebis
-
-
-                                        </div>
-                                        <div class="property-detail case petit ">
-
-                                            <img src="../img/logo.png" height="130" width="130" alt="" />
-                                            <h4><a href="property.html" title="The Helux villa">Nom de l'entreprise</a></h4>
-                                            <i class="fa fa-map-marker  color-red" aria-hidden="true"></i> Localisation
-                                            <br>
-                                            <br>Hacque adfabilitate confisus cum eadem
-                                            <br>postridie feceris, ut incognitus haerebis
-
-
-                                        </div>
-
-                                    </div><!-- Carousel -->
-
-                                </div>
-
-                                <div class="col-md-1">
-                                    <h1><i class="fa fa-arrow-right" aria-hidden="true"></i></h1>
-                                </div>
+                    <? foreach($var->search_results_partner as $content) { ?>
+                    <?
+                            $fields = "  ";
+                            foreach(lib\BDD::get_prop_fields($content->ID) as $field) {
+                                $fields .= $field->label.', ';
+                            }
+                            $fields = substr($fields,0,-2);
+                    ?>
+                    <?
+                            $continuities = "  ";
+                            foreach(lib\BDD::get_prop_continuities($content->ID) as $continuity) {
+                                $continuities .= $continuity->label.', ';
+                            }
+                            $continuities = substr($continuities,0,-2);
+                    ?>
+                    <div class="col-md-6 proposition_item">
+                        <div class="property-grid" style="clear: none">
+                        <div class="to-thumb col-sm-4 p0">
+                            <img src="<?= lib\File::get_img_path(lib\File::BUSINESS_LOGO,$content->ID_ent) ?>" alt="">
+                            <?= $this->_setLink('<i class="ti ti-share"> </i>',['nav'=>'business', 'part' => 'proposition', 'id' => $content->ID],['class' => 'proeprty-sh-more-list']) ?>
+                        </div>
+                        <div class="to-details col-sm-8 p0">
+                            <div class="property-top-cnt">
+                                <h3><?= $this->_setLink(lib\Text::cutString($content->label,0,30),['nav'=>'business', 'part' => 'proposition', 'id' => $content->ID]) ?></h3>
+                                <p><?= lib\Text::cutString($content->description,0,50) ?></p>
                             </div>
+                            <div class="property-bottom-cnt">
 
+
+                                <ul class="property-info">
+                                    <li><i class="fa fa-map-marker"> </i> <span> <?= $content->city.','.$content->country ?> </span> </li>
+                                    <li class="li-rl"></li>
+                                    <li><i class="fa  fa-road"> </i> <span><?= number_format($content->distance , 2, ',', ' ').'km' ?></span>  </li>
+                                    <li class="li-rl"></li>
+                                    <li><i class="fa  fa-money"></i> <span><? switch($content->remuneration){
+                                                            case 0 : echo '<b title="Demander cette information directement à l\'entreprise"> ??</b>'; break;
+                                                            case 1 : echo '<i class="fa fa-check"></i>'; break;
+                                                            case 2 : echo '<i class="fa fa-arrow"></i>'; break;
+                                                        }?></span>   </li>
+                                    <li class="li-rl"></li>
+                                    <li><i class="fa  fa-quote-right"> </i> <span><?= $fields ?></span>  </li>
+                                    <li class="li-rl"></li>
+                                    <li><i class="fa  fa-briefcase"> </i> <span><?= $continuities ?></span>  </li>
+                                    <li class="li-rl"></li>
+
+                                </ul>
+                            </div>
                         </div>
                     </div>
+                    </div>
+                    <? } ?>
+                    <? if(count((array)$var->search_results_partner) == 0) { ?>
+                        <h3 class="text-center">Aucune propositions correspondantes chez nos partenaires</h3>
+                    <? } ?>
                 </div>
             </div>
         </section >
 
 
 
-        <section class="block remove-top bordgris petit">
-            <div  style="background: grey ; background-attachment: fixed;" class="parallax scrolly-invisible  whitish"></div>
+        <section class="block bordgris" id="other_list">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-12">
-
-                        <div class="properties-sec">
-                            <div class="block petit"></div>
-
-                            <div class="row">
-                                <div class="col-md-1">
-                                    <h1><i class="fa fa-arrow-left color-blanc" aria-hidden="true"></i></h1>
+                    <? foreach($var->search_results_other as $content) { ?>
+                        <?
+                            $fields = "  ";
+                            foreach(lib\BDD::get_prop_fields($content->ID) as $field) {
+                                $fields .= $field->label.', ';
+                            }
+                            $fields = substr($fields,0,-2);
+                        ?>
+                    <?
+                            $continuities = "  ";
+                            foreach(lib\BDD::get_prop_continuities($content->ID) as $continuity) {
+                                $continuities .= $continuity->label.', ';
+                            }
+                            $continuities = substr($continuities,0,-2);
+                    ?>
+                    <div class="col-md-6 proposition_item">
+                        <div class="property-grid blanc" style="clear: none">
+                            <div class="to-thumb col-sm-4 p0">
+                                <img src="<?= lib\File::get_img_path(lib\File::BUSINESS_LOGO,$content->ID_ent) ?>" alt="">
+                                <?= $this->_setLink('<i class="ti ti-share"> </i>',['nav'=>'business', 'part' => 'proposition', 'id' => $content->ID],['class' => 'proeprty-sh-more-list']) ?>
+                            </div>
+                            <div class="to-details col-sm-8 p0">
+                                <div class="property-top-cnt">
+                                    <h3><?= $this->_setLink(lib\Text::cutString($content->label,0,30),['nav'=>'business', 'part' => 'proposition', 'id' => $content->ID]) ?></h3>
+                                    <p><?= lib\Text::cutString($content->description,0,50) ?></p>
                                 </div>
-                                <div class="col-md-10">
-                                    <div class="carousel-prop">
-                                    <!-- Liste Résultats -->
-                                    <? foreach($var->search_results as $content) { ?>
-                                    <div class="property-detail blanc case  petit ">
-
-                                        <img src="../img/logo.png" height="130" width="130" alt="" />
-                                        <h4><?= $this->_setLink($content->label,['nav'=>'business', 'part' => 'item', 'id' => $content->ID]) ?></h4>
-                                        <i class="fa fa-map-marker  color-red" aria-hidden="true"></i> Localisation
-                                        <br>
-                                        <br>Hacque adfabilitate confisus cum eadem
-                                        <br>postridie feceris, ut incognitus haerebis
-                                    </div>
-                                    <? } ?>
+                                <div class="property-bottom-cnt">
 
 
-
-                                            <div class="property-detail blanc case petit ">
-
-                                                <img src="../img/logo.png" height="130" width="130" alt="" />
-                                                <h4><a href="property.html" title="The Helux villa">Nom de l'entreprise</a></h4>
-                                                <i class="fa fa-map-marker  color-red" aria-hidden="true"></i> Localisation
-                                                <br>
-                                                <br>Hacque adfabilitate confisus cum eadem
-                                                <br>postridie feceris, ut incognitus haerebis
-
-
-                                            </div>
-                                            <div class="property-detail blanc case petit ">
-
-                                                <img src="../img/logo.png" height="130" width="130" alt="" />
-                                                <h4><a href="property.html" title="The Helux villa">Nom de l'entreprise</a></h4>
-                                                <i class="fa fa-map-marker  color-red" aria-hidden="true"></i> Localisation
-                                                <br>
-                                                <br>Hacque adfabilitate confisus cum eadem
-                                                <br>postridie feceris, ut incognitus haerebis
-
-
-                                            </div>
-                                            <div class="property-detail blanc case petit ">
-
-                                                <img src="../img/logo.png" height="130" width="130" alt="" />
-                                                <h4><a href="property.html" title="The Helux villa">Nom de l'entreprise</a></h4>
-                                                <i class="fa fa-map-marker  color-red" aria-hidden="true"></i> Localisation
-                                                <br>
-                                                <br>Hacque adfabilitate confisus cum eadem
-                                                <br>postridie feceris, ut incognitus haerebis
-
-
-                                            </div>
-                                            <div class="property-detail blanc case petit ">
-
-                                                <img src="../img/logo.png" height="130" width="130" alt="" />
-                                                <h4><a href="property.html" title="The Helux villa">Nom de l'entreprise</a></h4>
-                                                <i class="fa fa-map-marker  color-red" aria-hidden="true"></i> Localisation
-                                                <br>
-                                                <br>Hacque adfabilitate confisus cum eadem
-                                                <br>postridie feceris, ut incognitus haerebis
-
-
-                                            </div>
-                                        </div><!-- Carousel -->
+                                    <ul class="property-info">
+                                        <li><i class="fa fa-map-marker"> </i> <span> <?= $content->city.','.$content->country ?> </span> </li>
+                                        <li class="li-rl"></li>
+                                        <li><i class="fa  fa-road"> </i> <span><?= number_format($content->distance , 2, ',', ' ').'km' ?></span>  </li>
+                                        <li class="li-rl"></li>
+                                        <li><i class="fa  fa-money"></i> <span><? switch($content->remuneration){
+                                                            case 0 : echo '<b title="Demander cette information directement à l\'entreprise"> ??</b>'; break;
+                                                            case 1 : echo '<i class="fa fa-check"></i>'; break;
+                                                            case 2 : echo '<i class="fa fa-arrow"></i>'; break;
+                                                        }?></span>   </li>
+                                        <li class="li-rl"></li>
+                                        <li><i class="fa  fa-quote-right"> </i> <span><?= $fields ?></span>  </li>
+                                        <li class="li-rl"></li>
+                                        <li><i class="fa  fa-briefcase"> </i> <span><?= $continuities ?></span>  </li>
+                                        <li class="li-rl"></li>
+                                    </ul>
                                 </div>
-                                <div class="col-md-1">
-                                    <h1><i class="fa fa-arrow-right color-blanc" aria-hidden="true"></i></h1>
-                                </div>
-                           </div>
+                            </div>
                         </div>
                     </div>
+                    <? } ?>
+                    <? if(count((array)$var->search_results_other) == 0) { ?>
+                        <h3 class="text-center">Aucune propositions correspondantes</h3>
+                    <? } ?>
                 </div>
             </div>
         </section >
@@ -350,41 +205,40 @@
                             <ul class="carousel">
                                 <li>
                                     <div class="agent-content">
-                                        <a href="agent.html"><img src="../img/agents/agent1.jpg" alt="" /></a>
-                                        <h3>VALENTIN LACOUR</h3>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="agent-content">
-                                        <a href="agent.html"><img src="../img/agents/agent1.jpg" alt="" /></a>
-                                        <h3>YURI KARPOYAN</h3>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="agent-content">
-                                        <a href="agent.html"><img src="../img/agents/agent1.jpg" alt="" /></a>
-                                        <h3>EDOUARD RICHARD</h3>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="agent-content">
-                                        <a href="agent.html"><img src="../img/agents/valb.jpg" alt="" /></a>
+                                        <img src="/public/img/team/vbillaud.jpg" alt="" />
                                         <h3>VALENTIN BILLAUD</h3>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="agent-content">
-                                        <a href="agent.html"><img src="../img/agents/agent1.jpg" alt="" /></a>
+                                        <img src="/public/img/team/adubois.jpg" alt="" />
+                                        <h3>ANTOINE DUBOIS</h3>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="agent-content">
+                                        <img src="/public/img/team/ykarpoyan.jpg" alt="" />
+                                        <h3>YURI KARPOYAN</h3>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="agent-content">
+                                        <img src="/public/img/team/vlacour.jpg" alt="" />
+                                        <h3>VALENTIN LACOUR</h3>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="agent-content">
+                                        <img src="/public/img/team/rlemaire.jpg" alt="" />
                                         <h3>REMI LEMAIRE</h3>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="agent-content">
-                                        <a href="agent.html"><img src="../img/agents/agent1.jpg" alt="" /></a>
-                                        <h3>ANTOINE DUBOIS</h3>
+                                        <img src="/public/img/team/erichard.jpg" alt="" />
+                                        <h3>EDOUARD RICHARD</h3>
                                     </div>
                                 </li>
-
                             </ul>
                         </div>
                     </div>
@@ -403,27 +257,11 @@
                             </div>
                             <div class="our-clients-sec">
                                 <ul class="carousel-client">
-                                    <li>
-                                        <a href="#" title=""><img src="../img/clients/our-client1.jpg" alt="" /></a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title=""><img src="../img/clients/our-client2.jpg" alt="" /></a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title=""><img src="../img/clients/our-client3.jpg" alt="" /></a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title=""><img src="../img/clients/our-client4.jpg" alt="" /></a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title=""><img src="../img/clients/our-client5.jpg" alt="" /></a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title=""><img src="../img/clients/our-client1.jpg" alt="" /></a>
-                                    </li>
-                                    <li>
-                                        <a href="#" title=""><img src="../img/clients/our-client3.jpg" alt="" /></a>
-                                    </li>
+                                    <? foreach($var->partnerList as $partner) { ?>
+                                        <li>
+                                            <?= $this->_setLink('<img src="'.lib\File::get_img_path(lib\File::BUSINESS_LOGO,$partner->ID).'" style="max-height: 150px; max-width: 150px" alt="" />',['nav'=>'business', 'part' => 'item', 'id' => $partner->ID],['title'=> $partner->name]) ?>
+                                        </li>
+                                    <? } ?>
                                 </ul>
                             </div>
                         </div>
@@ -438,10 +276,7 @@
                 <div class="container">
                     <span>Copyright All Right Reserved 2016 </span>
                     <ul>
-                        <li><a title="" href="#">ACCUEIL</a></li>
-                        <li><a title="" href="#">PLAN DU SITE</a></li>
-                        <li><a title="" href="#">A PROPOS</a></li>
-                        <li><a title="" href="#">CONTACT</a></li>
+                        <li><a title="?nav=home" href="#">ACCUEIL</a></li>
                     </ul>
                 </div>
             </div>
@@ -449,3 +284,32 @@
         </footer>
 
     </div>
+
+                <script>
+                    var data = {"property": JSON.parse('<?= $var->total_search_result ?>') };
+
+                </script>
+                <script>
+                    auto_hidder('partner_list');
+                    auto_hidder('other_list');
+                    function auto_hidder(id){
+                        var counter = 1;
+                        var objects = $('#'+id+' .proposition_item');
+                        objects.each(function () {
+                                    if(counter++ > 4)
+                                        $(this).hide();
+                                }
+                        );
+                        if(objects.length > 4){
+                            $(objects[3]).after('<div class="col-md-12 text-center"><button class="btn" data-id="'+id+'">Tout afficher</button></div>');
+                            $("button[data-id='"+id+"']").on('click',function(){
+                                var id = $(this).attr('data-id');
+                                $('#'+id+' .proposition_item').each(function () {
+                                            $(this).show();
+                                        }
+                                );
+                                $(this).remove();
+                            });
+                        }
+                    }
+                </script>
