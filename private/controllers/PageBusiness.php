@@ -10,35 +10,38 @@ namespace controllers;
 
 
 use lib\BDD;
+use lib\Date;
 use lib\File;
 use lib\PageTemplate;
+use lib\Text;
 
 class PageBusiness extends PageTemplate{
 
-    public function __construct(){
-        parent::__construct();
-        //if(!$this->_isLoaded('login'))
-            //$this->_redirect('login');
+    public function _proposition(){
+        $this->var->proposition = BDD::get_proposition_info($this->global->get->id);
+        if(is_null($this->var->proposition)) $this->_redirect();
+        $this->var->countryList = link_parameters('lib/countries');
 
-    }
+        // Récupération des domaines d'activités de la proposition
+        $this->var->fields = "  ";
+        foreach(BDD::get_prop_fields($this->global->get->id) as $field) {
+            $this->var->fields .= $field->label.', ';
+        }
+        $this->var->fields = substr($this->var->fields,0,-2);
 
-    public function _index(){
-        $this->var->data = BDD::search_query();
-    }
+        //Récupération des possibilités de poursuites pour la proposition
+        $this->var->continuities = "  ";
+        foreach(BDD::get_prop_continuities($this->global->get->id) as $continuity) {
+            $this->var->continuities .= $continuity->label.', ';
+        }
+        $this->var->continuities = substr($this->var->continuities,0,-2);
 
-    public function _article(){
-        if(is_null($this->global->get->item))
-            $this->_redirect('index');
-        $this->var->data = BDD::get_proposition_info($this->global->get->item);
-        $this->var->business = BDD::get_business_info($this->var->data->ID_ent);
-    }
-
-    public function _business(){
-        if(is_null($this->global->get->id))
-            $this->_redirect('index');
-        $this->var->business = BDD::get_business_info($this->global->get->id);
-        $this->var->proposition = BDD::get_business_prop_list($this->global->get->id);
-        $this->var->img_src = File::get_img_path(File::BUSINESS_LOGO,$this->global->get->id);
+        //Conversion JSON pour la carte
+        $proposition = $this->var->proposition;
+        unset($proposition->description);
+        $proposition->label = Text::cutString($proposition->label,0,30);
+        $proposition->img = File::get_img_path(File::BUSINESS_LOGO,$proposition->ID);
+        $this->var->json_proposition = str_replace('\r\n','<br>',json_encode($proposition));
     }
 
 } 

@@ -1,0 +1,73 @@
+<div class="inner-head overlap">
+            <div  style="background: url('/public/img/prop_banner.jpg') repeat scroll 50% 422.28px transparent;" class="parallax scrolly-invisible no-parallax"></div><!-- PARALLAX BACKGROUND IMAGE -->
+            <div class="container">
+                <div class="inner-content">
+                    <span><i class="fa fa-university"></i></span>
+                    <h2><?= $var->proposition->label ?></h2>
+                    <ul>
+                        <li><?= $this->_setLink($var->proposition->name,['nav'=>'business', 'part' => 'item', 'id' => $var->proposition->ID_ent]) ?></li>
+
+                    </ul>
+                </div>
+            </div>
+        </div><!-- inner Head -->
+
+        <section class="block">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-9">
+                        <h1><?= $var->proposition->label ?></h1>
+                        <p><?= $var->proposition->description ?></p>
+                    </div>
+
+                    <div class="col-md-3 ">
+                        <img src="<?= lib\File::get_img_path(lib\File::BUSINESS_LOGO,$var->proposition->ID_ent); ?>" style="max-width: 100%; max-height: 300px; display: block;margin-left: auto; margin-right: auto" alt="" />
+                        <div class="property-detail propfond bordgris text-center" style="width: 100%">
+                            <h5><a href="callto:<?= $var->proposition->phone  ?>"><i class="fa fa-phone color-red" aria-hidden="true" ></i> <?= $var->proposition->phone ?></h5></a>
+                            <h5><a href="mailto:<?= $var->proposition->email ?>"><i class="fa fa-envelope  color-red" aria-hidden="true"></i> <?= $var->proposition->email ?></h5></a>
+                            <h5><i class="fa fa-map-marker  color-red" aria-hidden="true"></i> <?= $var->proposition->adress.', '.$var->proposition->zip_code ?><br><?= $var->proposition->city.', '.$var->countryList[$var->proposition->country] ?></h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-sm">
+                    <div class="col-md-6">
+                        <div class="property-detail bordgris ">
+
+                            <div class="detail-field row" >
+                                <h5><span class="col-xs-6 col-md-7 detail-field-label">Domaine(s) d'activité: </span></h5>
+                                <span class="col-xs-6 col-md-5 detail-field-value"><?= $var->fields ?></span>
+                                <h5><span class="col-xs-6 col-md-7 detail-field-label">Poursuites possibles:</span> </h5>
+                                <span class="col-xs-6 col-md-5 detail-field-value"><?= $var->continuities ?></span>
+                                <h5><span class="col-xs-6 col-md-7 detail-field-label">Compétences demandés:</span> </h5>
+                                <span class="col-xs-6 col-md-5 detail-field-value"><?= $var->proposition->skills ?></span>
+                                <h5><span class="col-xs-6 col-md-7 detail-field-label">Distance:</span> </h5>
+                                <span class="col-xs-6 col-md-5 detail-field-value"><?= number_format($var->proposition->distance , 2, ',', ' ').'km' ?></span>
+                                <h5><span class="col-xs-6 col-md-7 detail-field-label">Rémunération:</span> </h5>
+                                <span class="col-xs-6 col-md-5 detail-field-value"><? switch($var->proposition->remunération)
+                                    {
+                                        case 0 : echo '??'; break;
+                                        case 1 : echo 'Oui'; break;
+                                        case 2 : echo 'Non'; break;
+                                    }
+                                    ?></span>
+                                <h5><span class="col-xs-6 col-md-7 detail-field-label">Durée:</span> </h5>
+                                <span class="col-xs-6 col-md-5 detail-field-value"><?= $var->proposition->duration ?></span>
+                                <h5><span class="col-xs-6 col-md-7 detail-field-label">Numéro de SIRET :</span> </h5>
+                                <span class="col-xs-6 col-md-5 detail-field-value"><?= $var->proposition->siren ?></span>
+                                <h5><span class="col-xs-6 col-md-7 detail-field-label">Posté le :</span> </h5>
+                                <span class="col-xs-6 col-md-5 detail-field-value"><?= $var->proposition->creation_date->format('W d M yyyy') ?></span>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+
+                        <div id="map_canvas" class="map little_map"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <script>
+            var data = {"property": jQuery.parseJSON('[<?= $var->json_proposition ?>]')};
+        </script>
