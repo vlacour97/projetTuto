@@ -1,0 +1,112 @@
+<div class="inner-head overlap">
+    <div  style="background: url('/public/img/business_banner.jpg') repeat scroll 50% 422.28px transparent;" class="parallax scrolly-invisible no-parallax"></div><!-- PARALLAX BACKGROUND IMAGE -->
+    <div class="container">
+        <div class="inner-content">
+            <span><i class="fa fa-university"></i></span>
+            <h2><?= $var->business->name ?></h2>
+            <ul>
+                <li></li>
+
+            </ul>
+        </div>
+    </div>
+</div><!-- inner Head -->
+
+<section class="block">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+                <h1><?= $var->business->name ?></h1>
+                <p><?= $var->business->description ?></p>
+                <br>
+                <div class="property-detail bordgris">
+                    <div class="detail-field row" >
+                        <h5><span class="col-xs-6 col-md-7 detail-field-label">Dirigeant :</span> </h5>
+                        <span class="col-xs-6 col-md-5 detail-field-value"><?= $var->business->director_name ?></span>
+                        <h5><span class="col-xs-6 col-md-7 detail-field-label">Domaine(s) d'activité: </span></h5>
+                        <span class="col-xs-6 col-md-5 detail-field-value"><?= $var->fields ?></span>
+                        <h5><span class="col-xs-6 col-md-7 detail-field-label">Poursuites possibles:</span> </h5>
+                        <span class="col-xs-6 col-md-5 detail-field-value"><?= $var->continuities ?></span>
+                        <h5><span class="col-xs-6 col-md-7 detail-field-label">Numéro de SIRET :</span> </h5>
+                        <span class="col-xs-6 col-md-5 detail-field-value"><?= $var->business->siren ?></span>
+                        <h5><span class="col-xs-6 col-md-7 detail-field-label">Profil crée le:</span> </h5>
+                        <span class="col-xs-6 col-md-5 detail-field-value"><?= $var->business->creation_date->format('W d M yyyy') ?></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <img src="<?= lib\File::get_img_path(lib\File::BUSINESS_LOGO,$var->business->ID); ?>" style="max-width: 100%; max-height: 300px; display: block;margin-left: auto; margin-right: auto" alt="" />
+                <div class="property-detail propfond bordgris text-center" style="width: 100%">
+                    <h5><a href="callto:<?= $var->business->phone ?>"><i class="fa fa-phone color-red" aria-hidden="true" ></i> <?= $var->business->phone ?></h5></a>
+                    <h5><a href="mailto:<?= $var->business->mail ?>"><i class="fa fa-envelope  color-red" aria-hidden="true"></i> <?= $var->business->mail ?></h5></a>
+                    <h5><i class="fa fa-map-pin  color-red" aria-hidden="true"></i> <?= $var->business->address.', '.$var->business->zip_code ?><br><?= $var->business->city.', '.$var->countryList[$var->proposition->country] ?></h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</section  class="block">
+<div id="map_canvas" class="map little_map bordgris"></div>
+
+<section class="block bordgris ">
+    <div class="container">
+        <div class="row">
+            <? foreach($var->search_results as $content) { ?>
+            <?
+                            $fields = "  ";
+                            foreach(lib\BDD::get_prop_fields($content->ID) as $field) {
+            $fields .= $field->label.', ';
+            }
+            $fields = substr($fields,0,-2);
+            ?>
+            <?
+                            $continuities = "  ";
+                            foreach(lib\BDD::get_prop_continuities($content->ID) as $continuity) {
+            $continuities .= $continuity->label.', ';
+            }
+            $continuities = substr($continuities,0,-2);
+            ?>
+            <div class="col-md-6">
+                <div class="property-grid blanc" style="clear: none">
+                    <div class="to-thumb col-sm-4 p0">
+                        <img src="<?= lib\File::get_img_path(lib\File::BUSINESS_LOGO,$content->ID_ent) ?>" alt="">
+                        <?= $this->_setLink('<i class="ti ti-share"> </i>',['nav'=>'business', 'part' => 'proposition', 'id' => $content->ID],['class' => 'proeprty-sh-more-list']) ?>
+                    </div>
+                    <div class="to-details col-sm-8 p0">
+                        <div class="property-top-cnt">
+                            <h3><?= $this->_setLink(lib\Text::cutString($content->label,0,50),['nav'=>'business', 'part' => 'proposition', 'id' => $content->ID]) ?></h3>
+                            <p><?= lib\Text::cutString($content->description,0,50) ?></p>
+                        </div>
+                        <div class="property-bottom-cnt">
+
+
+                            <ul class="property-info">
+                                <li><i class="fa fa-map-marker"> </i> <span> <?= $content->city.','.$content->country ?> </span> </li>
+                                <li class="li-rl"></li>
+                                <li><i class="fa  fa-road"> </i> <span><?= number_format($content->distance , 2, ',', ' ').'km' ?></span>  </li>
+                                <li class="li-rl"></li>
+                                <li><i class="fa  fa-money"></i> <span><? switch($content->remuneration){
+                                                            case 0 : echo '<b title="Demander cette information directement à l\'entreprise"> ??</b>'; break;
+                                                            case 1 : echo '<i class="fa fa-check"></i>'; break;
+                                                            case 2 : echo '<i class="fa fa-arrow"></i>'; break;
+                                                        }?></span>   </li>
+                                <li class="li-rl"></li>
+                                <li><i class="fa  fa-quote-right"> </i> <span><?= $fields ?></span>  </li>
+                                <li class="li-rl"></li>
+                                <li><i class="fa  fa-briefcase"> </i> <span><?= $continuities ?></span>  </li>
+                                <li class="li-rl"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <? } ?>
+            <? if(count((array)$var->search_results) == 0) { ?>
+            <h3 class="text-center">Aucune propositions correspondantes</h3>
+            <? } ?>
+        </div>
+    </div>
+</section >
+
+<script>
+    var data = {"property": jQuery.parseJSON('<?= $var->json_results ?>')};
+</script>
