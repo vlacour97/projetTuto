@@ -41,7 +41,7 @@ class PageHome extends PageTemplate{
         foreach(BDD::search_query(false, $this->global->get->q_business_name, $this->global->get->q_country, $this->global->get->q_fields, $this->global->get->q_continuities, $this->global->get->q_remuneration) as $content){
             unset($content->description);
             $content->label = Text::cutString($content->label,0,30);
-            $content->img = File::get_img_path(File::BUSINESS_LOGO,$content->ID);
+            $content->img = File::get_img_path(File::BUSINESS_LOGO,$content->ID_ent);
             json_encode($content) != '' && $total_search_result .= str_replace('\r\n','<br>',json_encode($content)).',';
         }
         $this->var->total_search_result = substr($total_search_result,0,-1).']';

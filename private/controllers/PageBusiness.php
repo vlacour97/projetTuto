@@ -24,7 +24,7 @@ class PageBusiness extends PageTemplate{
         foreach($this->var->search_results as $content){
             unset($content->description);
             $content->label = Text::cutString($content->label,0,30);
-            $content->img = File::get_img_path(File::BUSINESS_LOGO,$content->ID);
+            $content->img = File::get_img_path(File::BUSINESS_LOGO,$content->ID_ent);
             json_encode($content) != '' && $json_results .= str_replace('\r\n','<br>',json_encode($content)).',';
         }
         $this->var->json_results = substr($json_results,0,-1).']';
@@ -68,7 +68,7 @@ class PageBusiness extends PageTemplate{
         $proposition = $this->var->proposition;
         unset($proposition->description);
         $proposition->label = Text::cutString($proposition->label,0,30);
-        $proposition->img = File::get_img_path(File::BUSINESS_LOGO,$proposition->ID);
+        $proposition->img = File::get_img_path(File::BUSINESS_LOGO,$proposition->ID_ent);
         $this->var->json_proposition = str_replace('\r\n','<br>',json_encode($proposition));
     }
 
