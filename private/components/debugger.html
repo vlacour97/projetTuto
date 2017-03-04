@@ -1,0 +1,40 @@
+<link rel="stylesheet" href="/public/css/font-awesome.min.css">
+<link rel="stylesheet" href="/public/css/_parts/debugger.css">
+<div id="debug-btn" class="dark" onclick="debug_btn_click()">
+    <i class="fa fa-bug"></i>
+</div>
+
+<div id="debug-box">
+    <pre>
+        <ul>
+            {debug-data}
+        </ul>
+
+    </pre>
+</div>
+
+<script>
+    var debug_open = false;
+    var box = document.getElementById('debug-box');
+    var btn = document.getElementById('debug-btn')
+
+    window.onload = function(){
+        if(window.location.hash == '#debug')
+        {
+            debug_btn_click();
+        }
+    };
+
+    function debug_btn_click(){
+        if(debug_open){
+            btn.className = ' dark';
+            box.style.display = "none";
+            window.location.hash = '';
+        }else{
+            btn.className = ' clear';
+            box.style.display = "block";
+            window.location.hash = 'debug';
+        }
+        debug_open = !debug_open;
+    }
+</script>

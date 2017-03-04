@@ -1,0 +1,13 @@
+{
+    "name":"Projet Tutoré",
+    "description":"",
+    "keywords":"",
+    "author":"IUT Amiens",
+    "copyright":"Gestion Stage&copy;",
+    "version":"1.0",
+    "last_update":"2017-01-26",
+    "admin_mail":"vlacour97@icloud.com",
+    "crypt_key":"marmotte",
+    "debug_mod" : true,
+    "api_key_gmaps" : "AIzaSyBV0EMyd6YJU_B7txPDNAlWYpLXOiVzgoQ"
+}
