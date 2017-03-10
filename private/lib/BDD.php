@@ -62,7 +62,7 @@ class BDD {
     static public function search_query($partner= null, $search = "",$country = "",$field = "",$continuity = "",$remuneration = ""){
         self::init();
         $query_def = 'SELECT calc_dist(propositions.latitude,propositions.longitude,'.self::$default_lat.','.self::$default_long.') as distance,propositions.*,business.partner AS partner, business.name AS name
-      FROM propositions,business,fields,continuities,linkcontinuities,linkfields
+      FROM propositions,business,fields,continuities
       WHERE propositions.ID_ent = business.ID
       AND (business.name like :search OR propositions.label LIKE :search)
       AND propositions.country LIKE :country
@@ -177,7 +177,7 @@ class BDD {
      */
     static public function get_prop_fields($proposition_id){
         self::init();
-        $query = self::$PDO->prepare('SELECT fields.* FROM fields, linkfields WHERE linkfields.id_field=fields.ID AND linkfields.id_prop=:proposition_id');
+        $query = self::$PDO->prepare('SELECT fields.* FROM fields, linkfields WHERE linkfields.id_field=fields.ID AND linkfields.id_prop=:proposition_id AND linkfields.deletion_date IS NULL');
         $query->execute(array(':proposition_id'=>$proposition_id));
         return DataFormatter::convert_array_to_object($query->fetchAll(\PDO::FETCH_ASSOC));
     }
@@ -189,7 +189,7 @@ class BDD {
      */
     static public function get_business_fields($business_id){
         self::init();
-        $query = self::$PDO->prepare('SELECT fields.* FROM fields, linkfields, propositions WHERE linkfields.id_field=fields.ID AND linkfields.id_prop=propositions.ID AND propositions.ID_ent=:business_id GROUP BY fields.ID');
+        $query = self::$PDO->prepare('SELECT fields.* FROM fields, linkfields, propositions WHERE linkfields.id_field=fields.ID AND linkfields.id_prop=propositions.ID AND propositions.ID_ent=:business_id AND linkfields.deletion_date IS NULL AND propositions.deletion_date IS NULL GROUP BY fields.ID');
         $query->execute(array(':business_id'=>$business_id));
         return DataFormatter::convert_array_to_object($query->fetchAll(\PDO::FETCH_ASSOC));
     }
@@ -201,7 +201,7 @@ class BDD {
      */
     static public function get_prop_continuities($proposition_id){
         self::init();
-        $query = self::$PDO->prepare('SELECT continuities.* FROM continuities, linkcontinuities WHERE linkcontinuities.ID_cont=continuities.id AND linkcontinuities.ID_prop=:proposition_id');
+        $query = self::$PDO->prepare('SELECT continuities.* FROM continuities, linkcontinuities WHERE linkcontinuities.ID_cont=continuities.id AND linkcontinuities.ID_prop=:proposition_id AND linkcontinuities.deletion_date IS NULL');
         $query->execute(array(':proposition_id' => $proposition_id));
         return DataFormatter::convert_array_to_object($query->fetchAll(\PDO::FETCH_ASSOC));
     }
@@ -213,7 +213,7 @@ class BDD {
      */
     static public function get_business_continuities($business_id){
         self::init();
-        $query = self::$PDO->prepare('SELECT continuities.* FROM continuities, linkcontinuities, propositions WHERE linkcontinuities.ID_cont=continuities.id AND linkcontinuities.ID_prop = propositions.ID AND propositions.ID_ent=:business_id GROUP BY continuities.id');
+        $query = self::$PDO->prepare('SELECT continuities.* FROM continuities, linkcontinuities, propositions WHERE linkcontinuities.ID_cont=continuities.id AND linkcontinuities.ID_prop = propositions.ID AND propositions.ID_ent=:business_id AND linkcontinuities.deletion_date IS NULL AND propositions.deletion_date IS NULL GROUP BY continuities.id');
         $query->execute(array(':business_id' => $business_id));
         return DataFormatter::convert_array_to_object($query->fetchAll(\PDO::FETCH_ASSOC));
     }
