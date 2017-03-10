@@ -2,3 +2,5 @@
 .idea/
 ## Mac OS temporary files
 .DS_Store
+## Business Data
+private/data/
