@@ -20,8 +20,11 @@ class Config extends DataFormatter{
     public $last_update;
     public $admin_mail;
     public $crypt_key;
+    public $debug_mod;
+    public $api_key_gmaps;
 
     public $dates = ['last_update'];
+    public $bool = ['debug_mod'];
 
     public function __construct(){
         DataFormatter::format_data(link_parameters(CONFIG_FILE_NAME),$this);
@@ -99,4 +102,19 @@ class Config extends DataFormatter{
         return $this->crypt_key;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getDebugMod()
+    {
+        return $this->debug_mod;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getApiKeyGmaps()
+    {
+        return $this->api_key_gmaps;
+    }
 } 
