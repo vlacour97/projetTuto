@@ -82,12 +82,14 @@ class PageTemplateStatement{
         is_null($page_name_temp) && $page_name_temp = PageTemplate::default_navigation_name;
         $part_name_temp = $_GET[PageTemplate::part_tag];
         is_null($part_name_temp) && $part_name_temp = PageTemplate::default_part_name;
+        $is_admin_temp = $_GET[PageTemplate::admin_tag] == 'true' || (!$_GET[PageTemplate::admin_tag] && $is_admin_temp = false);
 
         $this->config = new Config();
 
         $this->site_name = $this->config->getName();
         $this->page_name = $page_name_temp;
         $this->part_name =  $part_name_temp;
+        $this->is_admin =  $is_admin_temp;
     }
 }
 
@@ -111,6 +113,8 @@ class PageTemplate extends PageDefault{
     const default_navigation_name = 'home';
     const part_tag = 'part';
     const default_part_name = 'index';
+    const admin_tag = 'admin';
+    const connexion_tag = 'connexion_id';
     const components_path = '/private/components/';
 
     /**
@@ -129,10 +133,20 @@ class PageTemplate extends PageDefault{
         //Initialisation des variables pour le traitement
         $page_name = $this->global->page_name;
         $part_name = $this->global->part_name;
+        $is_admin = $this->global->is_admin;
 
-        $view_path = ABS_PATH.'/public/views/'.$page_name.'/'.$part_name.'.html';
-        $controller_name = 'controllers\Page'.ucfirst($page_name);
+        if($is_admin){
+            $view_path = ABS_PATH.'/public/views/admin/'.$page_name.'/'.$part_name.'.html';
+            $controller_name = 'controllers\admin\Page'.ucfirst($page_name);
+        }else{
+            $view_path = ABS_PATH.'/public/views/'.$page_name.'/'.$part_name.'.html';
+            $controller_name = 'controllers\Page'.ucfirst($page_name);
+        }
         $part_name = "_".$part_name;
+
+        //Vérification et chargement de la vue
+        if(!is_file($view_path) && !$this->_isAjax())
+            $this->_redirect($this::default_navigation_name,$this::default_part_name,false,$is_admin);
 
         // Création du controller et chargement de celui-ci
         if(class_exists($controller_name)){
@@ -145,17 +159,27 @@ class PageTemplate extends PageDefault{
             }
         }
 
-        //Vérification et chargement de la vue
-        if(!is_file($view_path))
-            $this->_redirect($this::default_part_name,$this::default_navigation_name);
-
         //Chargement des composants de developpement
-        if($this->global->config->getDebugMod()) $this->showDebugger($var);
+        if($this->global->config->getDebugMod() && !$this->_isAjax()) $this->showDebugger($var);
 
-        $controller_object->header();
-        $controller_object->nav();
+        //Changement de design pour la partie admin
+        if($is_admin) $page_default = new PageDefaultAdmin(); else $page_default = $controller_object;
+
+        //Inclusion du content selon les cas échéants
+        if(!$this->_isAjax()) $controller_object->include_content($view_path,$page_default,$this->var); else  include($view_path);
+    }
+
+    /**
+     * Permet d'inclure le contenu dans la page
+     * @param $view_path string
+     * @param $controller_object \lib\PageDefault
+     */
+    protected function include_content($view_path,$controller_object,$var){
+        $controller_object->header($var);
+        $controller_object->sidebar($var);
+        $controller_object->nav($var);
         include($view_path);
-        $controller_object->footer();
+        $controller_object->footer($var);
     }
 
     /**
@@ -188,10 +212,11 @@ class PageTemplate extends PageDefault{
      * @param null|string $page
      * @param bool $saveData
      */
-    protected function _redirect($part = null,$page = null,$saveData = false){
+    protected function _redirect($page = null,$part = null,$saveData = false, $is_admin = false){
         is_null($part) && $part = $this->global->part_name;
         is_null($page) && $page = $this->global->page_name;
         $link = 'index.php?';
+        $is_admin && $link .= $this::admin_tag.'=true&';
         $saveData && $link .= $this->_saveDataInLink(true).'&';
         $link .= $this::navigation_tag.'='.$page.'&'.$this::part_tag.'='.$part;
         header("Location: $link");
@@ -246,5 +271,27 @@ class PageTemplate extends PageDefault{
     protected function _isLoaded($part,$page = null){
         is_null($page) && $page = $this->global->page_name;
         return $part == $this->global->part_name && $this->global->page_name;
+    }
+
+    /**
+     * Determine si l'utilisateur est connecté
+     * @return bool
+     */
+    protected function _isConnected(){
+        if(!isset($_SESSION[self::connexion_tag])) return false;
+        $response = BDD::get_user_info(Crypt::decrypt($_SESSION[self::connexion_tag]));
+        if(!isset($response->deletion_date) && $response->deletion_date == ""){
+            unset($_SESSION[self::connexion_tag]);
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Determine si une connexion est passé par Ajax ou non
+     * @return bool
+     */
+    protected function _isAjax(){
+        return !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest';
     }
 } 

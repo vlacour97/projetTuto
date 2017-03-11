@@ -283,7 +283,7 @@ ORDER BY linkstudentprop.creation_date;');
   (SELECT count(business.ID) FROM business WHERE deletion_date IS NULL) as nbBusiness,
   (SELECT count(linkstudentprop.ID) FROM linkstudentprop WHERE deletion_date IS NULL)/(SELECT count(students.ID) FROM students WHERE deletion_date IS NULL) * 100 as percentOfFindJob;');
         $query->execute();
-        return DataFormatter::convert_array_to_object($query->fetchAll(\PDO::FETCH_ASSOC));
+        return DataFormatter::convert_array_to_object($query->fetchAll(\PDO::FETCH_ASSOC)[0]);
     }
 
     /**
@@ -322,7 +322,7 @@ WHERE students.ID_group = groups.ID AND students.deletion_date IS NULL;');
         $query = self::$PDO->prepare('
 SELECT * FROM students,groups WHERE students.ID = :student;');
         $query->execute([':student'=>$ID]);
-        return DataFormatter::convert_array_to_object($query->fetchAll(\PDO::FETCH_ASSOC));
+        return DataFormatter::convert_array_to_object($query->fetchAll(\PDO::FETCH_ASSOC)[0]);
     }
 
     /**
@@ -334,6 +334,18 @@ SELECT * FROM students,groups WHERE students.ID = :student;');
         $query = self::$PDO->prepare('SELECT * FROM groups;');
         $query->execute();
         return DataFormatter::convert_array_to_object($query->fetchAll(\PDO::FETCH_ASSOC));
+    }
+
+    /**
+     * Récupére les informations d'un utilisateur
+     * @param $ID int
+     * @return \stdClass
+     */
+    static public function get_user_info($ID){
+        self::init();
+        $query = self::$PDO->prepare('SELECT * FROM users WHERE ID = :ID;');
+        $query->execute([':ID' => $ID]);
+        return DataFormatter::convert_array_to_object($query->fetchAll(\PDO::FETCH_ASSOC)[0]);
     }
 
     /**

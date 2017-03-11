@@ -8,6 +8,7 @@
 
 include 'private/init.php';
 
+session_start();
 $dd = new \lib\PageTemplate();
 $dd->init();
 

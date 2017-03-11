@@ -14,9 +14,6 @@ class HTML
 
     function css($filename)
     {
-        $part = explode(".", $filename);
-        if( $part[count($part)-1]  != "css" )
-            return false;
         if (!filter_var($filename, FILTER_VALIDATE_URL))
         {
             $filename = "public/css/$filename";
@@ -30,7 +27,6 @@ class HTML
 
     function script($filename)
     {
-        $part = explode(".", $filename);
         if (!filter_var($filename, FILTER_VALIDATE_URL))
         {
             $filename = "public/js/$filename";

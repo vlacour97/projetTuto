@@ -15,6 +15,7 @@ class PageDefault {
         $html = new HTML();
         $config = new \lib\Config();
         echo '<!DOCTYPE html>';
+        echo '<html lang="fr">';
         echo '<head>';
         echo $html->meta(['http-equiv'=>'Content-Type', 'content' => 'text/html; charset=utf-8']);
         echo $html->meta(['name'=>'viewport', 'content' => 'width=device-width, initial-scale=1.0']);
@@ -37,6 +38,10 @@ class PageDefault {
         //preloader
         echo '<div id="preloader"></div>';
         echo '<div class="theme-layout">';
+
+    }
+
+    protected function sidebar(){
 
     }
 
@@ -77,6 +82,21 @@ class PageDefault {
     protected function footer(){
         $html = new HTML();
         $config = new \lib\Config();
+        echo '<footer>
+
+            <div class="bottom-line">
+                <div class="container">
+                    <span>Copyright All Right Reserved 2016 </span>
+                    <ul>
+                        <li><a title="Accueil" href="?nav=home">ACCUEIL</a></li>
+                        <li><a title="Gestion de stage" href="?admin=true&nav=home">GESTION DE STAGE</a></li>
+                    </ul>
+                </div>
+            </div>
+            <a href="#" class="scrollToTop"><i class="ti ti-arrow-circle-up"></i></a>
+        </footer>
+
+    </div>';
         echo $html->script('owl.carousel.min.js');
         echo $html->script('scrolly.js');
         echo $html->script('price-range.js');
