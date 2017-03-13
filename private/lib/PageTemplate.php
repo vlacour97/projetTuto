@@ -163,10 +163,10 @@ class PageTemplate extends PageDefault{
         if($this->global->config->getDebugMod() && !$this->_isAjax()) $this->showDebugger($var);
 
         //Changement de design pour la partie admin
-        if($is_admin) $page_default = new PageDefaultAdmin(); else $page_default = $controller_object;
+        if($is_admin){ $page_default = new PageDefaultAdmin(); }else $page_default = $controller_object;
 
         //Inclusion du content selon les cas échéants
-        if(!$this->_isAjax()) $controller_object->include_content($view_path,$page_default,$this->var); else  include($view_path);
+        if(!$this->_isAjax()) $controller_object->include_content($view_path,$page_default,$var); else  include($view_path);
     }
 
     /**
@@ -236,24 +236,49 @@ class PageTemplate extends PageDefault{
         return $response;
     }
 
+    /**
+     * Permet la création de liens
+     * @param $label
+     * @param array $data
+     * @param array $options
+     * @return string
+     */
     protected function _setLink($label,$data = array(),$options = array()){
-        is_null($data['nav']) && $data['nav'] = $this->global->page_name;
-        is_null($data['part']) && $data['part'] = $this->global->part_name;
+        $response = "";
+
+        if(is_string($data))
+            switch($data){
+                case 'mailto':
+                case 'callto' :
+                    $response = $data.':'.$label;
+                    break;
+                default:
+                    $response = $data;
+            }
+
+        if(is_array($data)){
+            is_null($data['nav']) && $data['nav'] = $this->global->page_name;
+            is_null($data['part']) && $data['part'] = $this->global->part_name;
+            is_null($data['admin']) && $data['admin'] = ($this->global->is_admin) ? 'true' : 'false';
 
 
-        $nav = $data['nav'];
-        $part = $data['part'];
+            $nav = $data['nav'];
+            $part = $data['part'];
+            $admin = $data['admin'];
 
-        unset($data['nav']);
-        unset($data['part']);
+            unset($data['nav']);
+            unset($data['part']);
+            unset($data['admin']);
 
-        $data[$this::navigation_tag ] = $nav;
-        $data[$this::part_tag ] = $part;
+            $data[$this::navigation_tag ] = $nav;
+            $data[$this::part_tag ] = $part;
+            $data[$this::admin_tag ] = $admin;
 
-        $response = 'index.php?';
-        foreach($data as $key=>$value)
+            $response = 'index.php?';
+            foreach($data as $key=>$value)
                 $response .= $key.'='.$value.'&';
-        substr($response,0,-1);
+            substr($response,0,-1);
+        }
 
         $options_text = '';
         foreach($options as $key=>$value){
