@@ -11,7 +11,7 @@ namespace lib;
 /**
  * Class uploaded_img
  * @package lib
- * @author Rémi Lemaire
+ * @author Edouard Richar
  */
 class uploaded_img{
 
@@ -51,7 +51,7 @@ class uploaded_img{
 /**
  * Class File
  * @package lib
- * @author Rémi Lemaire
+ * @author Edouard Richard
  */
 class File {
 
