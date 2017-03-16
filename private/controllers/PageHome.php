@@ -10,6 +10,7 @@ namespace controllers;
 
 
 use lib\BDD;
+use lib\Crypt;
 use lib\File;
 use lib\PageTemplate;
 use lib\Text;
