@@ -25,6 +25,7 @@ class PageDefaultAdmin {
         echo $html->css('material-dashboard.css');
         echo $html->css('font-awesome.min.css');
         echo $html->css('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700%7CMaterial+Icons');
+        echo $html->script('jquery-3.1.0.min.js');
         echo '</head>';
         echo '<body >';
         echo '<div class="wrapper">';
@@ -34,6 +35,8 @@ class PageDefaultAdmin {
     public function sidebar($var){
         $config = new \lib\Config();
         $user_info = BDD::get_user_info(Crypt::decrypt($var->global->session->{PageTemplate::connexion_tag}));
+        $nav_parts = link_parameters('app/pages_admin_data');
+        $nav = $_GET[PageTemplate::navigation_tag];
         echo '<div class="sidebar" data-active-color="blue" data-background-color="black" data-image="/public/img/sidebar_admin.jpg">';
         /**
         * Tip 1: You can change the color of active element of the sidebar using: data-active-color="purple | blue | green | orange | red | rose"
@@ -67,14 +70,17 @@ class PageDefaultAdmin {
                         </div>
                     </div>
                 </div>';
-        echo '<ul class="nav">
-                    <li class="active">
-                        <a href="index.php?admin=true&nav=home">
-                            <i class="material-icons">dashboard</i>
-                            <p>Tableau de Bord</p>
+        echo '<ul class="nav">';
+        foreach($nav_parts as $content){
+            if($nav == $content['id']) $active = "class='active'"; else $active = "";
+            echo '<li '.$active.'>
+                        <a href="index.php?admin=true&nav='.$content['id'].'">
+                            <i class="material-icons">'.$content['icon'].'</i>
+                            <p>'.$content['name'].'</p>
                         </a>
-                    </li>
-                </ul>
+                    </li>';
+        }
+        echo '</ul>
             </div>
         </div>';
     }
@@ -167,7 +173,6 @@ class PageDefaultAdmin {
 			</div>
     </div>';
         echo '</body>';
-        echo $html->script('jquery-3.1.0.min.js');
         echo $html->script('jquery-ui.min.js');
         echo $html->script('bootstrap.min.js');
         echo $html->script('material.min.js');
@@ -188,6 +193,7 @@ class PageDefaultAdmin {
         echo $html->script('fullcalendar.min.js');
         echo $html->script('jquery.tagsinput.js');
         echo $html->script('material-dashboard.js');
+        echo $html->script('jquery.datatables.js');
         echo '</html>';
 
     }

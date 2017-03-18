@@ -58,4 +58,8 @@ class Text {
         }
         return $response;
     }
+
+    static function format_address($address,$zip_code,$city,$country){
+        return $address.', '.$zip_code.'<br>'.$city.', '.$country;
+    }
 } 

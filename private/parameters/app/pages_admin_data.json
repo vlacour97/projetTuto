@@ -1,0 +1,12 @@
+[
+    {
+        "id":"home",
+        "name":"Tableau de Bord",
+        "icon":"dashboard"
+    },
+    {
+        "id":"business",
+        "name":"Gestion des entreprises",
+        "icon":"business"
+    }
+]

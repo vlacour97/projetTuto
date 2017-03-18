@@ -1,0 +1,112 @@
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-icon" data-background-color="rose">
+                    <i class="material-icons">perm_identity</i>
+                </div>
+                <div class="card-content">
+                    <h4 class="card-title"><?= $var->titlePage; ?> -
+                        <small class="category">Ajout</small>
+                    </h4>
+                    <form method="post">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Nom de l'entreprise</label>
+                                    <input type="text" required name="name" class="form-control">
+                                    <span class="material-input"></span></div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Nom du directeur</label>
+                                    <input type="text" required name="director_name" class="form-control">
+                                    <span class="material-input"></span></div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Numéro SIREN</label>
+                                    <input type="text" required name="siren" class="form-control">
+                                    <span class="material-input"></span></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Téléphone</label>
+                                    <input type="text" required name="phone" class="form-control">
+                                    <span class="material-input"></span></div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Mail</label>
+                                    <input type="email" name="mail" class="form-control">
+                                    <span class="material-input"></span></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Adresse</label>
+                                    <input type="text" required name="address" class="form-control">
+                                    <span class="material-input"></span></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Ville</label>
+                                    <input type="text" required name="city" class="form-control">
+                                    <span class="material-input"></span></div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Code Postal</label>
+                                    <input type="text" required name="zip_code" class="form-control">
+                                    <span class="material-input"></span></div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Pays</label>
+                                    <select class="selectpicker" required name="country" data-style="select-with-transition" title="Choisir un pays" data-size="7">
+                                        <option> Choisir un pays</option>
+                                        <? foreach(link_parameters('lib/countries') as $key=>$country) {
+                                            echo "<option value='$key'>$country</option>";
+                                        } ?>
+                                    </select></span>
+                                    <span class="material-input"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group label-floating">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" value="true" name="partner"> Cette entreprise est une entreprise partenaire ?
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Description</label>
+                                    <div class="form-group label-floating">
+                                        <label class="control-label"> Expliquez briévement l'activité de l'entreprise</label>
+                                        <textarea class="form-control" required name="description" rows="5"></textarea>
+                                        <span class="material-input"></span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-danger text-center"><?= $var->updateError ?></p>
+                        <button type="submit" class="btn btn-rose pull-right">Ajouter une entreprise</button>
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

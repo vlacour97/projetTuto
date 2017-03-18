@@ -116,7 +116,7 @@ class BDD {
      */
     static public function get_business_list(){
         self::init();
-        $query = self::$PDO->prepare('SELECT count(propositions.ID) as nb_prop,business.* FROM business,propositions where business.ID=propositions.ID_ent GROUP BY business.ID');
+        $query = self::$PDO->prepare('SELECT (SELECT count(propositions.ID) FROM propositions WHERE propositions.ID_ent = business.ID) as nb_prop,business.* FROM business where business.deletion_date IS NULL;');
         $query->execute();
         return DataFormatter::convert_array_to_object($query->fetchAll(\PDO::FETCH_ASSOC));
     }
@@ -164,7 +164,7 @@ class BDD {
         self::init();
         $query = self::$PDO->prepare('SELECT count(propositions.ID) as nb_prop,business.*
     FROM business,propositions
-    WHERE business.partner = TRUE
+    WHERE business.partner = TRUE AND business.deletion_date IS NULL
     GROUP BY business.ID;');
         $query->execute();
         return DataFormatter::convert_array_to_object($query->fetchAll(\PDO::FETCH_ASSOC));

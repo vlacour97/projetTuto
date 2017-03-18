@@ -1,0 +1,133 @@
+
+<div class="container-fluid">
+    <div class="row">
+        <? if($var->data->ID != 0) {?>
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-icon" data-background-color="rose">
+                    <i class="material-icons">perm_identity</i>
+                </div>
+                <div class="card-content">
+                    <h4 class="card-title"><?= $var->titlePage; ?> -
+                        <small class="category">Modification</small>
+                    </h4>
+                    <form method="post">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Nom de l'entreprise</label>
+                                    <input type="text" name="name" class="form-control" value="<?= $var->data->name; ?>">
+                                    <span class="material-input"></span></div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Nom du directeur</label>
+                                    <input type="text" name="director_name" class="form-control" value="<?= $var->data->director_name; ?>">
+                                    <span class="material-input"></span></div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Numéro SIREN</label>
+                                    <input type="text" name="siren" class="form-control" value="<?= $var->data->siren; ?>">
+                                    <span class="material-input"></span></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Téléphone</label>
+                                    <input type="text" name="phone" class="form-control" value="<?= $var->data->phone; ?>">
+                                    <span class="material-input"></span></div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Mail</label>
+                                    <input type="email" name="mail" class="form-control" value="<?= $var->data->mail; ?>">
+                                    <span class="material-input"></span></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Adresse</label>
+                                    <input type="text" name="address" class="form-control" value="<?= $var->data->address; ?>">
+                                    <span class="material-input"></span></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Ville</label>
+                                    <input type="text" name="city" class="form-control" value="<?= $var->data->city; ?>">
+                                    <span class="material-input"></span></div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Code Postal</label>
+                                    <input type="text" name="zip_code" class="form-control" value="<?= $var->data->zip_code; ?>">
+                                    <span class="material-input"></span></div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Pays</label>
+                                    <select class="selectpicker" name="country" data-style="select-with-transition" title="Choisir un pays" data-size="7">
+                                        <option> Choisir un pays</option>
+                                        <? foreach(link_parameters('lib/countries') as $key=>$country) {
+                                        if($key == $var->data->country)
+                                        echo "<option selected value='$key'>$country</option>";
+                                        else
+                                        echo "<option value='$key'>$country</option>";
+                                        } ?>
+                                    </select></span>
+                                    <span class="material-input"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group label-floating">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" checked="<?= $var->data->partner; ?>" name="partner"> Cette entreprise est une entreprise partenaire ?
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Description</label>
+                                    <div class="form-group label-floating">
+                                        <label class="control-label"> Expliquez briévement l'activité de l'entreprise</label>
+                                        <textarea class="form-control" name="description" rows="5"><?= $var->data->description; ?></textarea>
+                                        <span class="material-input"></span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-danger text-center"><?= $var->updateError ?></p>
+                        <button type="submit" class="btn btn-rose pull-right">Mettre à jour les informations</button>
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <? }else{ ?>
+        <div class="col-md-4 col-md-push-4">
+            <div class="card card-pricing card-raised">
+                <div class="content">
+                    <h6 class="category">Erreur</h6>
+                    <div class="icon icon-rose">
+                        <i class="material-icons">close</i>
+                    </div>
+                    <h3 class="card-title">Impossible de trouver cette entreprise</h3>
+                    <p class="card-description">
+                        Cette entreprise n'existe pas ! :(
+                    </p>
+                    <?= $this->_setLink('Retour à la liste des entreprises',['part' => 'index'],['class'=>'btn btn-rose btn-round']);?>
+                </div>
+            </div>
+        </div>
+        <? }  ?>
+    </div>
+</div>

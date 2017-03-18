@@ -1,0 +1,100 @@
+
+<div class="container-fluid">
+    <div class="row">
+        <? if(count(get_object_vars($var->data)) != 0) {?>
+            <div class="col-md-12">
+                <div class="card card-profile">
+                    <div class="card-avatar">
+                        <?= $this->_setLink('<img class="img" alt="Logo '.$var->data->name.'" src="'.\lib\File::get_img_path(\lib\File::BUSINESS_LOGO,$var->data->ID).'">',['admin' => false,'nav'=>'business', 'part' => 'item', 'id' => $var->data->ID],['target'=>'_blank']);?>
+                    </div>
+                    <div class="card-content">
+                        <h6 class="category text-gray"><?= \lib\Text::format_address($var->data->address,$var->data->zip_code,$var->data->city,$var->data->country) ?></h6>
+                        <h4 class="card-title"><?= $var->data->name ?></h4>
+                        <p class="description">
+                            <?= $var->data->description ?>
+                            <br>
+                            <b>Nom du directeur :</b> <?= $var->data->director_name ?><br>
+                            <b>Numero de siren :</b> <?= $var->data->siren ?><br>
+                            <b>Date de création :</b> <?= $var->data->creation_date->format('d M yyyy') ?><br>
+                            <b>Nombre de propositions de stage :</b> <?= $var->data->nb_prop ?>
+                        </p>
+                        <?= $this->_setLink(str_replace(' ','',$var->data->phone),'callto',['class'=>'btn btn-info btn-round','title' => 'Appelez moi !']) ?>
+                        <?= $this->_setLink('Retourner la liste des entreprises',['part'=>'index'],['class'=>'btn btn-default btn-round']) ?>
+                        <?= $this->_setLink($var->data->mail,'mailto',['class'=>'btn btn-primary btn-round','title' => 'Ecrivez-moi !']) ?>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <h3 class="text-center">Liste des propositions :</h3>
+            <hr>
+            <div class="col-md-12">
+                <? foreach($var->propositions as $content) { ?>
+                    <div class="col-md-6">
+                    <div class="card card-profile">
+                        <div class="card-avatar">
+                            <?= $this->_setLink('<img class="img" alt="Logo '.$var->data->name.'" src="'.\lib\File::get_img_path(\lib\File::BUSINESS_LOGO,$var->data->ID).'">',['admin' => false,'nav'=>'business', 'part' => 'proposition', 'id' => $content->ID],['target'=>'_blank']);?>
+                        </div>
+                        <div class="card-content">
+                            <h6 class="category text-gray"><?= \lib\Text::format_address($content->address,$content->zip_code,$content->city,$content->country) ?></h6>
+                            <h4 class="card-title"><?= $content->label ?></h4>
+                            <p class="description">
+                                <?= $content->description ?>
+                                <br>
+                                <b>Durée :</b> <?= $content->duration ?><br>
+                                <b>Compétences :</b> <?= $content->skills ?><br>
+                                <b>Rémunération :</b> <?
+                                switch($content->remuneration){
+                                    case 0:
+                                        echo 'NSP';
+                                        break;
+                                    case 1:
+                                        echo 'Oui';
+                                        break;
+                                    case 2:
+                                        echo 'Non';
+                                        break;
+                                }
+                                ?><br>
+                            </p>
+                            <?= $this->_setLink('Afficher les détails de la proposition',['nav'=>'proposition', 'part' => 'view', 'id' => \lib\Crypt::encrypt($content->ID)],['class'=>'btn btn-default btn-round']) ?>
+                        </div>
+                    </div>
+                </div>
+                <? } ?>
+                <? if(count(get_object_vars($var->propositions)) == 0) { ?>
+                    <div class="col-md-4 col-md-push-4">
+                    <div class="card card-pricing card-raised">
+                        <div class="content">
+                            <h6 class="category">Il va falloir encore attendre</h6>
+                            <div class="icon icon-rose">
+                                <i class="material-icons">hourglass_empty</i>
+                            </div>
+                            <h3 class="card-title">Aucune propositions pour cette entreprise</h3>
+                            <p class="card-description">
+                                Veuillez ajouter de nouvelles propositions à cette entreprise !
+                            </p>
+                            <?= $this->_setLink('Ajouter une proposition',['nav'=>'propositions','part' => 'add', 'id_ent'=>\lib\Crypt::encrypt($var->data->ID)],['class'=>'btn btn-rose btn-round']);?>
+                        </div>
+                    </div>
+                </div>
+                <? } ?>
+            </div>
+        <? }else{ ?>
+            <div class="col-md-4 col-md-push-4">
+                <div class="card card-pricing card-raised">
+                    <div class="content">
+                        <h6 class="category">Erreur</h6>
+                        <div class="icon icon-rose">
+                            <i class="material-icons">close</i>
+                        </div>
+                        <h3 class="card-title">Impossible de trouver cette entreprise</h3>
+                        <p class="card-description">
+                            Cette entreprise n'existe pas ! :(
+                        </p>
+                        <?= $this->_setLink('Retour à la liste des entreprises',['part' => 'index'],['class'=>'btn btn-rose btn-round']);?>
+                    </div>
+                </div>
+            </div>
+        <? }  ?>
+    </div>
+</div>
