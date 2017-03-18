@@ -121,9 +121,24 @@ class BDD {
         return DataFormatter::convert_array_to_object($query->fetchAll(\PDO::FETCH_ASSOC));
     }
 
+    /**
+     * Récupére le plus grand ID dans la table Business
+     * @return int
+     */
     static public function get_max_business_id(){
         self::init();
         $query = self::$PDO->prepare('SELECT count(ID) as ID FROM business');
+        $query->execute();
+        return DataFormatter::convert_array_to_object($query->fetchAll(\PDO::FETCH_ASSOC))->{0}->ID;
+    }
+
+    /**
+     * Récupére le plus grand ID dans la table Propositions
+     * @return mixed
+     */
+    static public function get_max_proposition_id(){
+        self::init();
+        $query = self::$PDO->prepare('SELECT count(ID) as ID FROM propositions');
         $query->execute();
         return DataFormatter::convert_array_to_object($query->fetchAll(\PDO::FETCH_ASSOC))->{0}->ID;
     }
@@ -203,7 +218,7 @@ class BDD {
      */
     static public function get_prop_fields($proposition_id){
         self::init();
-        $query = self::$PDO->prepare('SELECT fields.* FROM fields, linkfields WHERE linkfields.id_field=fields.ID AND linkfields.id_prop=:proposition_id AND linkfields.deletion_date IS NULL');
+        $query = self::$PDO->prepare('SELECT fields.* FROM fields, linkfields WHERE linkfields.id_field=fields.ID AND linkfields.id_prop=:proposition_id');
         $query->execute(array(':proposition_id'=>$proposition_id));
         return DataFormatter::convert_array_to_object($query->fetchAll(\PDO::FETCH_ASSOC));
     }
@@ -215,7 +230,7 @@ class BDD {
      */
     static public function get_business_fields($business_id){
         self::init();
-        $query = self::$PDO->prepare('SELECT fields.* FROM fields, linkfields, propositions WHERE linkfields.id_field=fields.ID AND linkfields.id_prop=propositions.ID AND propositions.ID_ent=:business_id AND linkfields.deletion_date IS NULL AND propositions.deletion_date IS NULL GROUP BY fields.ID');
+        $query = self::$PDO->prepare('SELECT fields.* FROM fields, linkfields, propositions WHERE linkfields.id_field=fields.ID AND linkfields.id_prop=propositions.ID AND propositions.ID_ent=:business_id AND propositions.deletion_date IS NULL GROUP BY fields.ID');
         $query->execute(array(':business_id'=>$business_id));
         return DataFormatter::convert_array_to_object($query->fetchAll(\PDO::FETCH_ASSOC));
     }
@@ -227,7 +242,7 @@ class BDD {
      */
     static public function get_prop_continuities($proposition_id){
         self::init();
-        $query = self::$PDO->prepare('SELECT continuities.* FROM continuities, linkcontinuities WHERE linkcontinuities.ID_cont=continuities.id AND linkcontinuities.ID_prop=:proposition_id AND linkcontinuities.deletion_date IS NULL');
+        $query = self::$PDO->prepare('SELECT continuities.* FROM continuities, linkcontinuities WHERE linkcontinuities.ID_cont=continuities.id AND linkcontinuities.ID_prop=:proposition_id');
         $query->execute(array(':proposition_id' => $proposition_id));
         return DataFormatter::convert_array_to_object($query->fetchAll(\PDO::FETCH_ASSOC));
     }
@@ -544,8 +559,8 @@ INSERT INTO propositions(ID_ent, label, adress, zip_code, city, country, latitud
      */
     static public function link_proposition_to_field($id_prop,$id_field){
         self::init();
-        $query = self::$PDO->prepare('INTO linkfields(id_prop, id_field) VALUES (:id_prop, :id_field);');
-        return $query->execute([':id_prop'=> $id_prop, ':id_field' => $id_field]);
+        $query = self::$PDO->prepare('INSERT INTO linkfields(id_prop, id_field,creation_date) VALUES (:id_prop, :id_field,NOW());');
+        return $query->execute([':id_prop'=> intval($id_prop), ':id_field' => intval($id_field)]);
     }
 
     /**
@@ -556,7 +571,7 @@ INSERT INTO propositions(ID_ent, label, adress, zip_code, city, country, latitud
      */
     static public function link_proposition_to_continuity($id_prop,$id_continuity){
         self::init();
-        $query = self::$PDO->prepare('INSERT INTO linkcontinuities(ID_prop, ID_cont) VALUES (:ID_prop, :ID_cont);');
+        $query = self::$PDO->prepare('INSERT INTO linkcontinuities(ID_prop, ID_cont,creation_date) VALUES (:ID_prop, :ID_cont,NOW());');
         return $query->execute([':ID_prop'=> $id_prop, ':ID_cont' => $id_continuity]);
     }
 
@@ -792,7 +807,7 @@ UPDATE linkcontinuities SET deletion_date = NOW() WHERE id_prop = :ID;');
      */
     static public function unlink_proposition_to_field($ID){
         self::init();
-        $query = self::$PDO->prepare('UPDATE linkfields SET deletion_date = NOW() WHERE id = :ID;');
+        $query = self::$PDO->prepare('DELETE FROM linkfields WHERE id_prop = :ID;');
         return $query->execute([':ID' => $ID]);
     }
 
@@ -803,7 +818,7 @@ UPDATE linkcontinuities SET deletion_date = NOW() WHERE id_prop = :ID;');
      */
     static public function unlink_proposition_to_continuity($ID){
         self::init();
-        $query = self::$PDO->prepare('UPDATE linkcontinuities SET deletion_date = NOW() WHERE id = :ID;');
+        $query = self::$PDO->prepare('DELETE FROM linkcontinuities WHERE ID_prop = :ID;');
         return $query->execute([':ID' => $ID]);
     }
 

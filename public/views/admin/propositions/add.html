@@ -1,0 +1,153 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-icon" data-background-color="rose">
+                    <i class="material-icons">message</i>
+                </div>
+                <div class="card-content">
+                    <h4 class="card-title"><?= $var->titlePage; ?> -
+                        <small class="category">Ajout</small>
+                    </h4>
+                    <form method="post">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Libelé de la proposition</label>
+                                    <input type="text" required name="label" class="form-control">
+                                    <span class="material-input"></span></div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Nom du directeur</label>
+                                    <select class="selectpicker business" required name="ID_ent" data-style="select-with-transition" title="Choisir une entreprise" data-size="7">
+                                        <option> Choisir une entreprise</option>
+                                        <? foreach($var->businessList as $business) {
+                                        $businessID = \lib\Crypt::encrypt($business->ID);
+                                            echo "<option value='$businessID'>$business->name</option>";
+                                        } ?>
+                                    </select>
+                                    <span class="material-input"></span></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Adresse</label>
+                                    <input type="text" required name="address" class="form-control">
+                                    <span class="material-input"></span></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Ville</label>
+                                    <input type="text" required name="city" class="form-control">
+                                    <span class="material-input"></span></div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Code Postal</label>
+                                    <input type="text" required name="zip_code" class="form-control">
+                                    <span class="material-input"></span></div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Pays</label>
+                                    <select class="selectpicker" required name="country" data-style="select-with-transition" title="Choisir un pays" data-size="7">
+                                        <option> Choisir un pays</option>
+                                        <? foreach(link_parameters('lib/countries') as $key=>$country) {
+                                            echo "<option value='$key'>$country</option>";
+                                        } ?>
+                                    </select>
+                                    <span class="material-input"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Durée</label>
+                                    <input type="text" required name="duration" class="form-control">
+                                    <span class="material-input"></span></div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Rémunération</label>
+                                    <select class="selectpicker" required name="remuneration" data-style="select-with-transition" title="Choisir une Rémunération" data-size="7">
+                                        <? foreach(['NSP','Oui','Non'] as $key=>$content) {
+                                            echo "<option value='$key'>$content</option>";
+                                        } ?>
+                                    </select>
+                                    <span class="material-input"></span></div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Domaines d'activités</label>
+                                    <select class="selectpicker" required name="fields[]" multiple data-style="select-with-transition" title="Choisir vos domaines d'activités" data-size="7">
+                                        <? foreach($var->fieldList as $content) {
+                                            echo "<option value='$content->ID'>$content->label</option>";
+                                        } ?>
+                                    </select>
+                                    <span class="material-input"></span></div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Poursuites en entreprise</label>
+                                    <select class="selectpicker" required name="continuities[]" multiple data-style="select-with-transition" title="Choisir les poursuites possibles dans l'entreprise" data-size="7">
+                                        <? foreach($var->continuitiesList as $content) {
+                                            echo "<option value='$content->id'>$content->label</option>";
+                                        } ?>
+                                    </select>
+                                    <span class="material-input"></span></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Compétences</label>
+                                    <div class="form-group label-floating">
+                                        <label class="control-label"> Expliquez briévement les compétences demandés pour le stage</label>
+                                        <textarea class="form-control" required name="skills" rows="5"></textarea>
+                                        <span class="material-input"></span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Description</label>
+                                    <div class="form-group label-floating">
+                                        <label class="control-label"> Expliquez briévement l'activité de l'entreprise</label>
+                                        <textarea class="form-control" required name="description" rows="5"></textarea>
+                                        <span class="material-input"></span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-danger text-center"><?= $var->updateError ?></p>
+                        <button type="submit" class="btn btn-rose pull-right">Ajouter un proposition</button>
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        $('.business').on('change',function(e){
+            var id = $(this).val();
+            $.get('index.php?admin=true&nav=propositions&part=ajax_get_address&id='+id)
+                    .done(function(data){
+                        var json = jQuery.parseJSON(data);
+                        for(var index in json)
+                            if($('[name="' + index + '"]').val() == "")
+                                    $('[name="' + index + '"]').val(json[index]).parent().removeClass('is-empty');
+                            $('.selectpicker').selectpicker('refresh')
+                    })
+        })
+
+    });
+</script>

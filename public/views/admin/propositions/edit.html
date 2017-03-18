@@ -1,0 +1,169 @@
+
+<div class="container-fluid">
+    <div class="row">
+        <? if($var->data->ID != 0) {?>
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-icon" data-background-color="rose">
+                    <i class="material-icons">message</i>
+                </div>
+                <div class="card-content">
+                    <h4 class="card-title"><?= $var->titlePage; ?> -
+                        <small class="category">Modification</small>
+                    </h4>
+                    <form method="post">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Libelé de la proposition</label>
+                                    <input type="text" required name="label" class="form-control" value="<?= $var->data->label; ?>">
+                                    <span class="material-input"></span></div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Nom du directeur</label>
+                                    <select class="selectpicker" required name="ID_ent" data-style="select-with-transition" title="Choisir une entreprise" data-size="7">
+                                        <option> Choisir une entreprise</option>
+                                        <? foreach($var->businessList as $business) {
+                                            $businessID = \lib\Crypt::encrypt($business->ID);
+                                            if($business->ID == $var->data->ID_ent)
+                                                echo "<option selected value='$businessID'>$business->name</option>";
+                                            else
+                                                echo "<option value='$businessID'>$business->name</option>";
+                                        } ?>
+                                    </select>
+                                    <span class="material-input"></span></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Adresse</label>
+                                    <input type="text" required name="address" class="form-control" value="<?= $var->data->adress; ?>">
+                                    <span class="material-input"></span></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Ville</label>
+                                    <input type="text" required name="city" class="form-control" value="<?= $var->data->city; ?>">
+                                    <span class="material-input"></span></div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Code Postal</label>
+                                    <input type="text" required name="zip_code" class="form-control" value="<?= $var->data->zip_code; ?>">
+                                    <span class="material-input"></span></div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Pays</label>
+                                    <select class="selectpicker" required name="country" data-style="select-with-transition" title="Choisir un pays" data-size="7">
+                                        <option> Choisir un pays</option>
+                                        <? foreach(link_parameters('lib/countries') as $key=>$country) {
+                                        if($key == $var->data->country)
+                                        echo "<option selected value='$key'>$country</option>";
+                                        else
+                                        echo "<option value='$key'>$country</option>";
+                                        } ?>
+                                    </select>
+                                    <span class="material-input"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Durée</label>
+                                    <input type="text" required name="duration" class="form-control" value="<?= $var->data->duration; ?>">
+                                    <span class="material-input"></span></div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Rémunération</label>
+                                    <select class="selectpicker" required name="remuneration" data-style="select-with-transition" title="Choisir une Rémunération" data-size="7">
+                                        <? foreach(['NSP','Oui','Non'] as $key=>$content) {
+                                            if($var->data->remuneration == $key)
+                                                echo "<option value='$key' selected>$content</option>";
+                                            else
+                                                echo "<option value='$key'>$content</option>";
+                                        } ?>
+                                    </select>
+                                    <span class="material-input"></span></div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Domaines d'activités</label>
+                                    <select class="selectpicker" required name="fields[]" multiple data-style="select-with-transition" title="Choisir vos domaines d'activités" data-size="7">
+                                        <? foreach($var->fieldList as $content) {
+                                            if(in_array($content->ID,$var->prop_fields))
+                                                echo "<option value='$content->ID' selected>$content->label</option>";
+                                            else
+                                                echo "<option value='$content->ID'>$content->label</option>";
+                                        } ?>
+                                    </select>
+                                    <span class="material-input"></span></div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Poursuites en entreprise</label>
+                                    <select class="selectpicker" required name="continuities[]" multiple data-style="select-with-transition" title="Choisir les poursuites possibles dans l'entreprise" data-size="7">
+                                        <? foreach($var->continuitiesList as $content) {
+                                        if(in_array($content->id,$var->prop_continuities))
+                                            echo "<option value='$content->id' selected>$content->label</option>";
+                                        else
+                                            echo "<option value='$content->id'>$content->label</option>";
+                                        } ?>
+                                    </select>
+                                    <span class="material-input"></span></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Compétences</label>
+                                    <div class="form-group label-floating">
+                                        <label class="control-label"> Expliquez briévement les compétences demandés pour le stage</label>
+                                        <textarea class="form-control" required name="skills" rows="5"><?= $var->data->skills; ?></textarea>
+                                        <span class="material-input"></span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Description</label>
+                                    <div class="form-group label-floating">
+                                        <label class="control-label"> Expliquez briévement l'activité de l'entreprise</label>
+                                        <textarea class="form-control" required name="description" rows="5"><?= $var->data->description; ?></textarea>
+                                        <span class="material-input"></span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-danger text-center"><?= $var->updateError ?></p>
+                        <button type="submit" class="btn btn-rose pull-right">Mettre à jour les informations</button>
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <? }else{ ?>
+        <div class="col-md-4 col-md-push-4">
+            <div class="card card-pricing card-raised">
+                <div class="content">
+                    <h6 class="category">Erreur</h6>
+                    <div class="icon icon-rose">
+                        <i class="material-icons">close</i>
+                    </div>
+                    <h3 class="card-title">Impossible de trouver cette proposition</h3>
+                    <p class="card-description">
+                        Cette proposition n'existe pas ! :(
+                    </p>
+                    <?= $this->_setLink('Retour à la liste des propositions',['part' => 'index'],['class'=>'btn btn-rose btn-round']);?>
+                </div>
+            </div>
+        </div>
+        <? }  ?>
+    </div>
+</div>

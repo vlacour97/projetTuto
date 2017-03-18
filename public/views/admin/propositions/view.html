@@ -1,0 +1,56 @@
+<div class="container-fluid">
+    <div class="row">
+        <? if(count(get_object_vars($var->data)) != 0) {?>
+        <div class="col-md-12">
+            <div class="card card-profile">
+                <div class="card-avatar">
+                    <?= $this->_setLink('<img class="img" alt="Logo '.$var->business->name.'" src="'.\lib\File::get_img_path(\lib\File::BUSINESS_LOGO,$var->data->ID_ent).'">',['admin' => false,'nav'=>'business', 'part' => 'proposition', 'id' => $var->data->ID],['target'=>'_blank']);?>
+                </div>
+                <div class="card-content">
+                    <h6 class="category text-gray"><?= \lib\Text::format_address($var->data->address,$var->data->zip_code,$var->data->city,$var->data->country) ?></h6>
+                    <h4 class="card-title"><?= $var->data->label ?></h4>
+                    <p class="description">
+                        <?= $var->data->description ?>
+                        <br>
+                        <b>Durée :</b> <?= $var->data->duration ?><br>
+                        <b>Compétences :</b> <?= $var->data->skills ?><br>
+                        <b>Rémunération :</b> <?
+                                switch($var->data->remuneration){
+                        case 0:
+                        echo 'NSP';
+                        break;
+                        case 1:
+                        echo 'Oui';
+                        break;
+                        case 2:
+                        echo 'Non';
+                        break;
+                        }
+                        ?><br>
+                    </p>
+                    <?= $this->_setLink(str_replace(' ','',$var->business->phone),'callto',['class'=>'btn btn-info btn-round','title' => 'Appelez moi !']) ?>
+                    <?= $this->_setLink('Fiche Entreprise',['nav'=>'business','part'=>'view','id'=>\lib\Crypt::encrypt($var->business->ID)],['class'=>'btn btn-rose btn-round']) ?>
+                    <?= $this->_setLink('Retourner la liste des propositions',['part'=>'index'],['class'=>'btn btn-default btn-round']) ?>
+                    <?= $this->_setLink($var->business->mail,'mailto',['class'=>'btn btn-primary btn-round','title' => 'Ecrivez-moi !']) ?>
+                </div>
+            </div>
+        </div>
+        <? }else{ ?>
+        <div class="col-md-4 col-md-push-4">
+            <div class="card card-pricing card-raised">
+                <div class="content">
+                    <h6 class="category">Erreur</h6>
+                    <div class="icon icon-rose">
+                        <i class="material-icons">close</i>
+                    </div>
+                    <h3 class="card-title">Impossible de trouver cette proposition</h3>
+                    <p class="card-description">
+                        Cette proposition n'existe pas ! :(
+                    </p>
+                    <?= $this->_setLink('Retour à la liste des propositions',['part' => 'index'],['class'=>'btn btn-rose btn-round']);?>
+                </div>
+            </div>
+        </div>
+        <? }  ?>
+    </div>
+</div>
