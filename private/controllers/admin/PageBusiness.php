@@ -11,6 +11,7 @@ namespace controllers\admin;
 
 use lib\BDD;
 use lib\Crypt;
+use lib\File;
 use lib\PageTemplate;
 
 class PageBusiness extends PageTemplate{
@@ -40,8 +41,18 @@ class PageBusiness extends PageTemplate{
 
         //Vérification de la récupération des données
         if(!empty(get_object_vars($this->global->post))){
-            if($this->edit_businnes($id,$this->global->post))
+            if($this->edit_businnes($id,$this->global->post)){
+                if(!empty(get_object_vars($this->global->files))){
+                    try{
+                        File::upload('.'.File::BUSINESS_LOGO,get_object_vars($this->global->files->logo),null,$id.'.jpg',true);
+                        clearstatcache();
+                        $this->_redirect(null,'index',false,true);
+                    }catch (\Exception $e){
+                        $this->var->updateError = $e->getMessage();
+                    }
+                }
                 $this->_redirect(null,'index',false,true);
+            }
             else
                 $this->var->updateError = "Erreur lors de la modification de l'entreprise";
         }
@@ -51,8 +62,19 @@ class PageBusiness extends PageTemplate{
     function _add(){
         //Vérification de la récupération des données
         if(!empty(get_object_vars($this->global->post))){
-            if($this->add_business($this->global->post))
+            if($this->add_business($this->global->post)){
+                if(!empty(get_object_vars($this->global->files))){
+                    try{
+                        $id = BDD::get_max_business_id();
+                        File::upload('.'.File::BUSINESS_LOGO,get_object_vars($this->global->files->logo),null,$id.'.jpg',true);
+                        clearstatcache();
+                        $this->_redirect(null,'index',false,true);
+                    }catch (\Exception $e){
+                        $this->var->updateError = $e->getMessage();
+                    }
+                }
                 $this->_redirect(null,'index',false,true);
+            }
             else
                 $this->var->updateError = "Erreur lors de l'ajout de l'entreprise";
         }
@@ -93,7 +115,6 @@ class PageBusiness extends PageTemplate{
 
     function _ajax_remove_business(){
         $id = Crypt::decrypt($this->global->get->id);
-        echo $id;
         echo json_encode(BDD::delete_business($id));
     }
 } 

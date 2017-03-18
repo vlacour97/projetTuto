@@ -121,6 +121,13 @@ class BDD {
         return DataFormatter::convert_array_to_object($query->fetchAll(\PDO::FETCH_ASSOC));
     }
 
+    static public function get_max_business_id(){
+        self::init();
+        $query = self::$PDO->prepare('SELECT count(ID) as ID FROM business');
+        $query->execute();
+        return DataFormatter::convert_array_to_object($query->fetchAll(\PDO::FETCH_ASSOC))->{0}->ID;
+    }
+
     /**
      * Récupération de la liste des proposition d'une entreprise
      * @param int $business_id ID de l'entreprise
@@ -138,6 +145,25 @@ class BDD {
         $query->execute(array(
             ':business_id' => $business_id
         ));
+        return DataFormatter::convert_array_to_object($query->fetchAll(\PDO::FETCH_ASSOC));
+    }
+
+
+    /**
+     * Récupére la liste des propositions
+     * @return \stdClass
+     */
+    static public function get_propositions_list(){
+        self::init();
+        $query = self::$PDO->prepare('SELECT calc_dist(propositions.latitude,propositions.longitude,'.self::$default_lat.','.self::$default_long.') AS distance,propositions.*, business.phone as phone, business.mail as mail,  business.name as name
+        FROM business, propositions
+        WHERE propositions.ID_ent = business.ID
+            AND propositions.deletion_date IS NULL
+            AND business.deletion_date IS NULL
+        GROUP BY propositions.ID
+        ORDER BY distance,
+          propositions.creation_date DESC;');
+        $query->execute();
         return DataFormatter::convert_array_to_object($query->fetchAll(\PDO::FETCH_ASSOC));
     }
 

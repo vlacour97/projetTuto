@@ -8,5 +8,10 @@
         "id":"business",
         "name":"Gestion des entreprises",
         "icon":"business"
+    },
+    {
+        "id":"propositions",
+        "name":"Gestion des propositions",
+        "icon":"message"
     }
 ]
