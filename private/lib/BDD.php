@@ -814,6 +814,18 @@ UPDATE linkcontinuities SET deletion_date = NOW() WHERE id_prop = :ID;');
     }
 
     /**
+     * Modifie le nom d'un groupe
+     * @param $ID int
+     * @param $label string
+     * @return bool
+     */
+    static public function edit_group($ID,$label){
+        self::init();
+        $query = self::$PDO->prepare('UPDATE groups SET label = :label WHERE ID = :ID;');
+        return $query->execute([':label'=> $label, ':ID' => $ID]);
+    }
+
+    /**
      * Permet de modifier les informations d'un utilisateur
      * @param $ID int
      * @param $fname string
@@ -890,6 +902,17 @@ DELETE FROM linkfields WHERE id_field = :ID;');
         $query = self::$PDO->prepare('
 DELETE FROM continuities WHERE ID = :ID;
 DELETE FROM linkcontinuities WHERE id_field = :ID;');
+        return $query->execute([':ID' => $ID]);
+    }
+
+    /**
+     * Supprime un groupe d'étudiants
+     * @param $ID int
+     * @return bool
+     */
+    static public function delete_group($ID){
+        self::init();
+        $query = self::$PDO->prepare('DELETE FROM groups WHERE ID = :ID');
         return $query->execute([':ID' => $ID]);
     }
 

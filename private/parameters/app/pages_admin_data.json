@@ -18,5 +18,16 @@
         "id":"students",
         "name":"Gestion des étudiants",
         "icon":"perm_identity"
+    },
+    {
+        "id" : "other",
+        "name" : "Autres",
+        "icon" : "extension",
+        "data" : [
+            {
+                "id":"group",
+                "name":"Groupes d'étudiants"
+            }
+        ]
     }
 ]

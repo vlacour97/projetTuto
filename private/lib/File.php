@@ -31,11 +31,20 @@ class uploaded_img{
         $centreX = round($im->getWidth() / 2);
         $centreY = round($im->getHeight() / 2);
 
-        $x1 = $centreX - 300;
-        $y1 = $centreY - 300;
+        if($im->getWidth() > $im->getHeight())
+        {
+            $x1 = $centreX - $centreY;
+            $y1 = $centreY - $centreY;
 
-        $x2 = $centreX + 300;
-        $y2 = $centreY + 300;
+            $x2 = $centreX + $centreY;
+            $y2 = $centreY + $centreY;
+        }else{
+            $x1 = $centreX - $centreX;
+            $y1 = $centreY - $centreX;
+
+            $x2 = $centreX + $centreX;
+            $y2 = $centreY + $centreX;
+        }
 
         if($im->getWidth() < 600 || $im->getHeight() < 600)
             $im->resample(600,600);
@@ -92,7 +101,7 @@ class File {
             throw new \Exception('Veuillez mettre en ligne un fichier',0);
 
         //Si il y a une erreur dans le fichier on sort du programme
-        if($file['error'] != "")
+        if($file['error'] != "" && $file['error'] != 0)
             throw new \Exception('Erreur :'.$file['error'],2);
 
         //Si une taille maximum est demandé et que celle-ci n'est pas respecté on revois une erreur

@@ -66,13 +66,33 @@ class PageDefaultAdmin {
                 </div>';
         echo '<ul class="nav">';
         foreach($nav_parts as $content){
-            if($nav == $content['id']) $active = "class='active'"; else $active = "";
-            echo '<li '.$active.'>
-                        <a href="index.php?admin=true&nav='.$content['id'].'">
+            if(isset($content['data']) && is_array($content['data'])){
+                echo '<li>
+                        <a data-toggle="collapse" href="#'.$content['id'].'">
+                            <i class="material-icons">'.$content['icon'].'</i>
+                            <p>'.$content['name'].'
+                                <b class="caret"></b>
+                            </p>
+                        </a>
+                        <div class="collapse" id="'.$content['id'].'">
+                            <ul class="nav">';
+                foreach($content['data'] as $content2){
+                    echo '<li>
+                                    <a href="index.php?'.PageTemplate::admin_tag.'=true&'.PageTemplate::navigation_tag.'='.$content2['id'].'">'.$content2['name'].'</a>
+                                </li>';
+                }
+                echo '</ul>
+                        </div>
+                    </li>';
+            }else{
+                if($nav == $content['id']) $active = "class='active'"; else $active = "";
+                echo '<li '.$active.'>
+                        <a href="index.php?'.PageTemplate::admin_tag.'=true&'.PageTemplate::navigation_tag.'='.$content['id'].'">
                             <i class="material-icons">'.$content['icon'].'</i>
                             <p>'.$content['name'].'</p>
                         </a>
                     </li>';
+            }
         }
         echo '</ul>
             </div>

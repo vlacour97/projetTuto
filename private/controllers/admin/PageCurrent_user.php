@@ -31,14 +31,14 @@ class PageCurrent_user extends PageTemplate{
                 if($this->edit_user($id,$this->global->post)){
                     if(!empty(get_object_vars($this->global->files))){
                         try{
-                            File::upload('.'.File::USER_AVATAR,get_object_vars($this->global->files->avatar),null,$id.'.jpg',true);
+                            File::upload('.'.File::USER_AVATAR,get_object_vars($this->global->files->avatar),null,$id.'.jpg',true)->crop();
                             clearstatcache();
                             $this->_redirect(null,'index',false,true);
                         }catch (\Exception $e){
                             $this->var->updateError = $e->getMessage();
                         }
                     }
-                    $this->_redirect(null,'index',false,true);
+                    if(!isset($e)) $this->_redirect(null,'index',false,true);
                 }
                 else
                     $this->var->updateError = "Erreur lors de la modification de vos informations";

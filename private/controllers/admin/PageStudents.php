@@ -62,7 +62,7 @@ class PageStudents extends PageTemplate{
         //Vérification de la récupération des données
         if(!empty(get_object_vars($this->global->post))){
             try{
-                if($this->edit_student($this->global->post))
+                if($this->add_student($this->global->post))
                     $this->_redirect(null,'index',false,true);
                 else
                     $this->var->updateError = "Erreur lors de la modification des informations de l'étudiant";
@@ -80,7 +80,19 @@ class PageStudents extends PageTemplate{
         return BDD::unlink_student_to_internship($ID_student) && BDD::link_student_to_proposition($ID_student,$ID_prop);
     }
 
-    private function edit_student($post){
+    private function edit_student($id,$post){
+        if(!is_int(intval($post->ID))) throw new \Exception('Votre identifiant doit être un entier');
+        if($post->ID != $id && isset(BDD::get_student_info($post->ID)->ID)) throw new \Exception('Cet identifiant est déjà utilisé :/');
+        try{
+            if(!BDD::edit_student($id,$post->ID,$post->ID_group,$post->name,$post->fname,$post->email,$post->phone,$post->INE,$post->address,$post->zip_code,$post->city,$post->country,$post->informations,$post->birth_date)) return false;
+            if($post->ID_prop != "false" && !$this->link_student($post->ID,Crypt::decrypt($post->ID_prop))) return false;
+        }catch(\Exception $e){
+            throw $e;
+        }
+        return true;
+    }
+
+    private function add_student($post){
         if(!is_int(intval($post->ID))) throw new \Exception('Votre identifiant doit être un entier');
         if(isset(BDD::get_student_info($post->ID)->ID)) throw new \Exception('Cet identifiant est déjà utilisé :/');
         try{
