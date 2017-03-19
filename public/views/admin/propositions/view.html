@@ -27,6 +27,8 @@
                         break;
                         }
                         ?><br>
+                        <b>Domaines d'activité :</b> <?= $var->fields ?><br>
+                        <b>Pousuites possibles :</b> <?= $var->continuities ?><br>
                     </p>
                     <?= $this->_setLink(str_replace(' ','',$var->business->phone),'callto',['class'=>'btn btn-info btn-round','title' => 'Appelez moi !']) ?>
                     <?= $this->_setLink('Fiche Entreprise',['nav'=>'business','part'=>'view','id'=>\lib\Crypt::encrypt($var->business->ID)],['class'=>'btn btn-rose btn-round']) ?>

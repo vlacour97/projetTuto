@@ -31,6 +31,10 @@
             {
                 "id":"fields",
                 "name":"Domaines d'activité"
+            },
+            {
+                "id":"continuities",
+                "name":"Poursuites en entreprise"
             }
         ]
     }

@@ -32,6 +32,15 @@ class PagePropositions extends PageTemplate{
         $this->var->business = BDD::get_business_info($this->var->data->ID_ent);
         $this->var->titlePage .= ' - '.$this->var->data->label;
         $this->var->tabStudents = BDD::get_proposition_student_list($id);
+        $arrayFields = $arrayContinuities =['N/C'];
+        foreach(BDD::get_prop_fields($id) as $key=>$content){
+            $arrayFields[$key] = $content->label;
+        }
+        $this->var->fields = implode(',',$arrayFields);
+        foreach(BDD::get_prop_continuities($id) as $key=>$content){
+            $arrayContinuities[$key] = $content->label;
+        }
+        $this->var->continuities = implode(",",$arrayContinuities);
     }
 
     function _edit(){
