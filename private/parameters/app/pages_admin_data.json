@@ -27,6 +27,10 @@
             {
                 "id":"group",
                 "name":"Groupes d'étudiants"
+            },
+            {
+                "id":"fields",
+                "name":"Domaines d'activité"
             }
         ]
     }
