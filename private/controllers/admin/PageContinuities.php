@@ -16,6 +16,8 @@ use lib\PageTemplate;
 class PageContinuities extends PageTemplate{
 
     function __construct(){
+        if(!$this->_isConnected())
+            $this->_redirect('login','index',false,true);
         $this->var->titlePage = "Gestion des poursuites possibles en entreprise";
         parent::__construct();
     }

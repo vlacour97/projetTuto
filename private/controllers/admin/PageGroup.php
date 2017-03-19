@@ -16,6 +16,8 @@ use lib\PageTemplate;
 class PageGroup extends PageTemplate{
 
     function __construct(){
+        if(!$this->_isConnected())
+            $this->_redirect('login','index',false,true);
         $this->var->titlePage = "Gestion des groupes d'étudiants";
         parent::__construct();
     }

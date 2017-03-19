@@ -17,6 +17,8 @@ use lib\PageTemplate;
 class PageStudents extends PageTemplate{
 
     function __construct(){
+        if(!$this->_isConnected())
+            $this->_redirect('login','index',false,true);
         $this->var->titlePage = "Gestion des étudiants";
         parent::__construct();
     }

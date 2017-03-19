@@ -17,6 +17,8 @@ use lib\PageTemplate;
 class PageCurrent_user extends PageTemplate{
 
     function __construct(){
+        if(!$this->_isConnected())
+            $this->_redirect('login','index',false,true);
         $this->var->titlePage = "Mon Compte";
         parent::__construct();
     }
@@ -29,7 +31,7 @@ class PageCurrent_user extends PageTemplate{
         if(!empty(get_object_vars($this->global->post))){
             try{
                 if($this->edit_user($id,$this->global->post)){
-                    if(!empty(get_object_vars($this->global->files))){
+                    if($this->global->files->avatar->name != ""){
                         try{
                             File::upload('.'.File::USER_AVATAR,get_object_vars($this->global->files->avatar),null,$id.'.jpg',true)->crop();
                             clearstatcache();

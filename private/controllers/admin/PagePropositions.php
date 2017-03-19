@@ -17,6 +17,8 @@ use lib\PageTemplate;
 class PagePropositions extends PageTemplate{
 
     function __construct(){
+        if(!$this->_isConnected())
+            $this->_redirect('login','index',false,true);
         $this->var->titlePage = "Gestion des propositions de stage";
         parent::__construct();
     }

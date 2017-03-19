@@ -404,6 +404,18 @@ SELECT students.*,groups.label as "group", (SELECT ID_prop FROM linkstudentprop 
     }
 
     /**
+     * Récupére les informations d'un utilisateur grâce à son email
+     * @param $email string
+     * @return \stdClass
+     */
+    static public function get_user_info_by_email($email){
+        self::init();
+        $query = self::$PDO->prepare('SELECT * FROM users WHERE email = :email;');
+        $query->execute([':email' => $email]);
+        return DataFormatter::convert_array_to_object($query->fetchAll(\PDO::FETCH_ASSOC)[0]);
+    }
+
+    /**
      * Ajoute un étudiant
      * @param $ID int
      * @param $ID_group int

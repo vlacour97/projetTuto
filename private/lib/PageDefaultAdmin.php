@@ -60,6 +60,9 @@ class PageDefaultAdmin {
                                 <li>
                                     <a href="index.php?admin=true&nav=current_user&part=index">Mon Profil</a>
                                 </li>
+                                <li>
+                                    <a href="index.php?admin=true&nav=login&part=logout">Déconnexion</a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -125,39 +128,25 @@ class PageDefaultAdmin {
                                     <p class="hidden-lg hidden-md">Tableau de Bord</p>
                                 </a>
                             </li>
-                            <li class="dropdown">
+                            <li>
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="material-icons">notifications</i>
-                                    <span class="notification">5</span>
+                                    <i class="material-icons">person</i>
                                     <p class="hidden-lg hidden-md">
-                                        Notifications
+                                        Mon profil
                                         <b class="caret"></b>
                                     </p>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a href="#">Un nouvel étudiant à trouvé un stage</a>
+                                        <a href="index.php?admin=true&nav=current_user&part=index">Modifier</a>
+                                    </li>
+                                    <li>
+                                        <a href="index.php?admin=true&nav=login&part=logout">Déconnexion</a>
                                     </li>
                                 </ul>
                             </li>
-                            <li>
-                                <a href="index.php?admin=true&nav=current_user&part=index">
-                                    <i class="material-icons">person</i>
-                                    <p class="hidden-lg hidden-md">Mon Profil</p>
-                                </a>
-                            </li>
                             <li class="separator hidden-lg hidden-md"></li>
                         </ul>
-                        <form class="navbar-form navbar-right" role="search">
-                            <div class="form-group form-search is-empty">
-                                <input type="text" class="form-control" placeholder="Rechercher">
-                                <span class="material-input"></span>
-                            </div>
-                            <button type="submit" class="btn btn-white btn-round btn-just-icon">
-                                <i class="material-icons">search</i>
-                                <div class="ripple-container"></div>
-                            </button>
-                        </form>
                     </div>
                 </div>
             </nav><div class="content">
