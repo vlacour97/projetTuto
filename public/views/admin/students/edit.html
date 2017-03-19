@@ -1,0 +1,232 @@
+
+<div class="container-fluid">
+    <div class="row">
+        <? if($var->data->ID != 0) {?>
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-icon" data-background-color="rose">
+                    <i class="material-icons">perm_identity</i>
+                </div>
+                <div class="card-content">
+                    <h4 class="card-title"><?= $var->titlePage; ?> -
+                        <small class="category">Modification</small>
+                    </h4>
+                    <form method="post" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Prénom</label>
+                                    <input type="text" required name="fname" class="form-control" value="<?= $var->data->fname; ?>">
+                                    <span class="material-input"></span></div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Nom</label>
+                                    <input type="text" required name="name" class="form-control" value="<?= $var->data->name; ?>">
+                                    <span class="material-input"></span></div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">ID</label>
+                                    <input type="number" required name="ID" class="form-control" value="<?= $var->data->ID; ?>">
+                                    <span class="material-input"></span></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">En stage dans l'entreprise</label>
+                                    <select class="selectpicker" name="ID_ent" data-style="select-with-transition" title="Choisir une entreprise" data-size="7">
+                                        <option <? if($var->data->ID_prop == "") echo 'selected'; ?> > Aucune entreprise</option>
+                                        <? foreach($var->tabBusiness as $business) {
+                                            $bID = \lib\Crypt::encrypt($business->ID);
+                                            if($var->data->ID_ent == $business->ID)
+                                                echo "<option selected value='$bID'>$business->name</option>";
+                                            else
+                                                echo "<option value='$bID'>$business->name</option>";
+                                        } ?>
+                                    </select>
+                                    <span class="material-input"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Pour..</label>
+                                    <select class="selectpicker" name="ID_prop" data-style="select-with-transition" title="Choisir une proposition" data-size="7">
+                                        <option <? if($var->data->ID_prop == "") echo 'selected'; ?> value="false"> Aucune proposition</option>
+                                        <? foreach($var->tabPropositions as $propositions) {
+                                        $pID = \lib\Crypt::encrypt($propositions->ID);
+                                        if($var->data->ID_prop == $propositions->ID)
+                                            echo "<option selected value='$pID'>$propositions->label</option>";
+                                        else
+                                            echo "<option value='$pID'>$propositions->label</option>";
+                                        } ?>
+                                    </select>
+                                    <span class="material-input"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Téléphone</label>
+                                    <input type="text" name="phone" class="form-control" value="<?= $var->data->phone; ?>">
+                                    <span class="material-input"></span></div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Mail</label>
+                                    <input type="email" name="email" class="form-control" value="<?= $var->data->email; ?>">
+                                    <span class="material-input"></span></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">INE</label>
+                                    <input type="text" name="INE" class="form-control" value="<?= $var->data->INE; ?>">
+                                    <span class="material-input"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Groupe</label>
+                                    <select class="selectpicker" required name="ID_group" data-style="select-with-transition" title="Choisir un groupe" data-size="7">
+                                        <option> Choisir un groupe</option>
+                                        <? foreach($var->tabGroup as $group) {
+                                        if($var->data->ID_group == $group->ID)
+                                        echo "<option selected value='$group->ID'>$group->label</option>";
+                                        else
+                                        echo "<option value='$group->ID'>$group->label</option>";
+                                        } ?>
+                                    </select>
+                                    <span class="material-input"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label">Date de Naissance</label>
+                                    <input type="text" name="birth_date" required class="form-control datepicker" value="<?= $var->data->birth_date; ?>" />
+                                    <span class="material-input"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Adresse</label>
+                                    <input type="text" name="address" class="form-control" value="<?= $var->data->address; ?>">
+                                    <span class="material-input"></span></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Ville</label>
+                                    <input type="text" name="city" class="form-control" value="<?= $var->data->city; ?>">
+                                    <span class="material-input"></span></div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Code Postal</label>
+                                    <input type="text" name="zip_code" class="form-control" value="<?= $var->data->zip_code; ?>">
+                                    <span class="material-input"></span></div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Pays</label>
+                                    <select class="selectpicker" name="country" data-style="select-with-transition" title="Choisir un pays" data-size="7">
+                                        <option> Choisir un pays</option>
+                                        <? foreach(link_parameters('lib/countries') as $key=>$country) {
+                                        if($key == $var->data->country)
+                                        echo "<option selected value='$key'>$country</option>";
+                                        else
+                                        echo "<option value='$key'>$country</option>";
+                                        } ?>
+                                    </select></span>
+                                    <span class="material-input"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Informations</label>
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Inscrivez quelques informations sur votre étudiant</label>
+                                        <textarea class="form-control" name="informations" rows="5"><?= $var->data->informations; ?></textarea>
+                                        <span class="material-input"></span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-danger text-center"><?= $var->updateError ?></p>
+                        <button type="submit" class="btn btn-rose pull-right">Mettre à jour les informations</button>
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <? }else{ ?>
+        <div class="col-md-4 col-md-push-4">
+            <div class="card card-pricing card-raised">
+                <div class="content">
+                    <h6 class="category">Erreur</h6>
+                    <div class="icon icon-rose">
+                        <i class="material-icons">close</i>
+                    </div>
+                    <h3 class="card-title">Impossible de trouver cet étudiant</h3>
+                    <p class="card-description">
+                        Cet étudiant n'existe pas ! :(
+                    </p>
+                    <?= $this->_setLink('Retour à la liste des étudiants',['part' => 'index'],['class'=>'btn btn-rose btn-round']);?>
+                </div>
+            </div>
+        </div>
+        <? }  ?>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.datepicker').datetimepicker({
+            format: 'YYYY-MM-DD',
+            icons: {
+                time: "fa fa-clock-o",
+                date: "fa fa-calendar",
+                up: "fa fa-chevron-up",
+                down: "fa fa-chevron-down",
+                previous: 'fa fa-chevron-left',
+                next: 'fa fa-chevron-right',
+                today: 'fa fa-screenshot',
+                clear: 'fa fa-trash',
+                close: 'fa fa-remove',
+                inline: true
+            }
+        });
+
+        $('select[name="ID_ent"]').on('change',function(){
+            var $this =  $(this);
+            var id = $this.val();
+            $.get('index.php?admin=true&nav=students&part=ajax_get_proposition_list&id='+id)
+                    .done(function (data) {
+                        var json = jQuery.parseJSON(data);
+                        var $prop = $('select[name="ID_prop"]');
+                        $prop.html('<option selected> Aucune proposition</option>');
+                        for(var index in json){
+                            $prop.append('<option value="' + json[index]['ID'] + '">' + json[index]['label'] + '</option>');
+                        }
+                        $('.selectpicker').selectpicker('refresh');
+                    });
+        });
+
+        $('select[name="ID_prop"]').on('change',function(){
+            var $this =  $(this);
+            var id = $this.val();
+            $.get('index.php?admin=true&nav=students&part=ajax_get_business_ID&id='+id)
+                    .done(function (data) {
+                        $('select[name="ID_ent"]').val(data);
+                        $('.selectpicker').selectpicker('refresh');
+                    });
+        });
+    });
+</script>

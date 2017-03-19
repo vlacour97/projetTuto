@@ -100,7 +100,7 @@
             if($this.hasClass('btn-muted')){
                 $.get('index.php?admin=true&nav=business&part=ajax_add_partner&id='+id)
                         .done(function(data){
-                            if(data)
+                            if(data == 'true')
                                 $this.removeClass('btn-muted').addClass('btn-primary');
                             else
                                 showErrorEdit();
@@ -109,7 +109,7 @@
             }else{
                 $.get('index.php?admin=true&nav=business&part=ajax_remove_partner&id='+id)
                         .done(function(data){
-                            if(data)
+                            if(data == 'true')
                                 $this.removeClass('btn-primary').addClass('btn-muted');
                             else
                                 showErrorEdit();
@@ -125,7 +125,7 @@
             $tr = $(this).closest('tr');
             $.get('index.php?admin=true&nav=business&part=ajax_remove_business&id='+id)
                     .done(function(data){
-                        if(data){
+                        if(data == 'true'){
                             table.row($tr).remove().draw();
                             e.preventDefault();
                         }

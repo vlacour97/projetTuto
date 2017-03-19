@@ -347,9 +347,23 @@ WHERE students.ID NOT IN (SELECT ID_student FROM linkstudentprop) AND deletion_d
     static public function get_student_list(){
         self::init();
         $query = self::$PDO->prepare('
-SELECT students.*, groups.label as "group" FROM students,groups
+SELECT students.*, groups.label as "group",(SELECT ID_prop FROM linkstudentprop WHERE ID_student = students.ID) as ID_prop FROM students,groups
 WHERE students.ID_group = groups.ID AND students.deletion_date IS NULL;');
         $query->execute();
+        return DataFormatter::convert_array_to_object($query->fetchAll(\PDO::FETCH_ASSOC));
+    }
+
+    /**
+     * Récupére la liste des étudiants faisant partie d'un stage
+     * @param int $id
+     * @return \stdClass
+     */
+    static public function get_proposition_student_list($id){
+        self::init();
+        $query = self::$PDO->prepare('
+SELECT students.*, groups.label as "group",(SELECT ID_prop FROM linkstudentprop WHERE ID_student = students.ID) as ID_prop FROM students,groups,linkstudentprop
+WHERE students.ID_group = groups.ID AND students.deletion_date IS NULL AND linkstudentprop.ID_student = students.ID AND linkstudentprop.ID_prop = :ID');
+        $query->execute(['ID'=>$id]);
         return DataFormatter::convert_array_to_object($query->fetchAll(\PDO::FETCH_ASSOC));
     }
 
@@ -361,7 +375,7 @@ WHERE students.ID_group = groups.ID AND students.deletion_date IS NULL;');
     static public function get_student_info($ID){
         self::init();
         $query = self::$PDO->prepare('
-SELECT * FROM students,groups WHERE students.ID = :student;');
+SELECT students.*,groups.label as "group", (SELECT ID_prop FROM linkstudentprop WHERE ID_student = students.ID) as ID_prop, (SELECT ID_ent FROM propositions WHERE ID = ID_prop) as ID_ent FROM students,groups WHERE students.ID = :student;');
         $query->execute([':student'=>$ID]);
         return DataFormatter::convert_array_to_object($query->fetchAll(\PDO::FETCH_ASSOC)[0]);
     }
@@ -829,7 +843,7 @@ UPDATE linkcontinuities SET deletion_date = NOW() WHERE id_prop = :ID;');
      */
     static public function unlink_student_to_internship($ID_student){
         self::init();
-        $query = self::$PDO->prepare('UPDATE linkstudentprop SET deletion_date = NOW() WHERE ID_student = :ID;');
+        $query = self::$PDO->prepare('DELETE FROM linkstudentprop WHERE ID_student = :ID_student;');
         return $query->execute([':ID_student' => $ID_student]);
     }
 

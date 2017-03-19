@@ -1,0 +1,46 @@
+<div class="container-fluid">
+    <div class="row">
+        <? if(count(get_object_vars($var->data)) != 0) {?>
+        <div class="col-md-12">
+            <div class="card card-profile">
+                <div class="card-avatar">
+                    <img class="img" alt="Logo '.$var->business->name.'" src="/public/img/default-avatar.png">
+                </div>
+                <div class="card-content">
+                    <h6 class="category text-gray"><?= $var->data->ID ?></h6>
+                    <h4 class="card-title"><?= $var->data->fname.' '.$var->data->name ?></h4>
+                    <p class="description">
+                        <?= $var->data->group ?>
+                        <br><br>
+                        <b>Adresse :</b> <?= \lib\Text::format_address($var->data->address,$var->data->zip_code,$var->data->city,$var->data->country) ?><br>
+                        <b>INE :</b> <?= $var->data->INE ?><br>
+                        <b>Informations :</b> <?= $var->data->informations ?><br>
+                        <b>Date de naissance :</b> <?= $var->data->birth_date->format('dd/mm/yyyy') ?><br>
+                        <b>Date de création:</b> <?= $var->data->creation_date->format('d MM yyyy') ?><br>
+                    </p>
+                    <?= $this->_setLink(str_replace(' ','',$var->data->phone),'callto',['class'=>'btn btn-info btn-round','title' => 'Appelez moi !']) ?>
+                    <? if($var->data->ID_prop != "") echo $this->_setLink('Fiche Proposition',['nav'=>'propositions','part'=>'view','id'=>\lib\Crypt::encrypt($var->data->ID_prop)],['class'=>'btn btn-rose btn-round']) ?>
+                    <?= $this->_setLink('Retourner la liste des étudiants',['part'=>'index'],['class'=>'btn btn-default btn-round']) ?>
+                    <?= $this->_setLink($var->data->email,'mailto',['class'=>'btn btn-primary btn-round','title' => 'Ecrivez-moi !']) ?>
+                </div>
+            </div>
+        </div>
+        <? }else{ ?>
+        <div class="col-md-4 col-md-push-4">
+            <div class="card card-pricing card-raised">
+                <div class="content">
+                    <h6 class="category">Erreur</h6>
+                    <div class="icon icon-rose">
+                        <i class="material-icons">close</i>
+                    </div>
+                    <h3 class="card-title">Impossible de trouver cet étudiant</h3>
+                    <p class="card-description">
+                        Cet étudiant n'existe pas ! :(
+                    </p>
+                    <?= $this->_setLink('Retour à la liste des étudiants',['part' => 'index'],['class'=>'btn btn-rose btn-round']);?>
+                </div>
+            </div>
+        </div>
+        <? }  ?>
+    </div>
+</div>

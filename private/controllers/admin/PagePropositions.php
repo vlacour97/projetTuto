@@ -31,6 +31,7 @@ class PagePropositions extends PageTemplate{
         $this->var->data = BDD::get_proposition_info($id);
         $this->var->business = BDD::get_business_info($this->var->data->ID_ent);
         $this->var->titlePage .= ' - '.$this->var->data->label;
+        $this->var->tabStudents = BDD::get_proposition_student_list($id);
     }
 
     function _edit(){
@@ -66,7 +67,7 @@ class PagePropositions extends PageTemplate{
             if($this->add_proposition($this->global->post))
                 $this->_redirect(null,'index',false,true);
             else
-                $this->var->updateError = "Erreur lors de la modification de la proposition";
+                $this->var->updateError = "Erreur lors de l'ajout de la proposition";
         }
     }
 

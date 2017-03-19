@@ -13,5 +13,10 @@
         "id":"propositions",
         "name":"Gestion des propositions",
         "icon":"message"
+    },
+    {
+        "id":"students",
+        "name":"Gestion des étudiants",
+        "icon":"perm_identity"
     }
 ]
