@@ -1,0 +1,82 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-icon" data-background-color="rose">
+                    <i class="material-icons">perm_identity</i>
+                </div>
+                <div class="card-content">
+                    <h4 class="card-title"><?= $var->titlePage ?> -
+                        <small class="category">Modifier</small>
+                    </h4>
+                    <form method="post" enctype="multipart/form-data">
+                        <div class="col-md-2">
+                            <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                                <div class="fileinput-new thumbnail img-circle">
+                                    <img src="<?= $var->avatarPath; ?>" alt="Avatar">
+                                </div>
+                                <div class="fileinput-preview fileinput-exists thumbnail img-circle"></div>
+                                <div>
+                                                    <span class="btn btn-round btn-rose btn-file">
+                                                        <span class="fileinput-new">Ajouter une Photo</span>
+                                                        <span class="fileinput-exists">Changer</span>
+                                                        <input type="file" name="avatar" />
+                                                    </span>
+                                    <br />
+                                    <a href="#" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Supprimer</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Prénom</label>
+                                        <input type="text" required name="fname" class="form-control" value="<?= $var->data->fname; ?>">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Nom</label>
+                                        <input type="text" required name="name" class="form-control" value="<?= $var->data->name; ?>">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Email</label>
+                                        <input type="email" required name="email" class="form-control" value="<?= $var->data->email; ?>">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Téléphone</label>
+                                        <input type="text" name="phone" class="form-control" value="<?= $var->data->phone; ?>">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Mot de passe</label>
+                                        <input type="password" name="password1" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Mot de passe (validation)</label>
+                                        <input type="password" name="password2" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-danger text-center"><?= $var->updateError ?></p>
+                        <button type="submit" class="btn btn-rose pull-right">Mettre à jour mon profil</button>
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

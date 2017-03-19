@@ -61,7 +61,7 @@ Class DataFormatter{
             if(is_array($value))
                 $return->$key = DataFormatter::convert_array_to_object($value);
             else
-                if((string)doubleval($value) == $value)
+                if((string)doubleval($value) === $value)
                     $return->$key = doubleval($value);
                 elseif(\DateTime::createFromFormat('Y-m-d G:i:s', $value) !== FALSE)
                     $return->$key = new Date($value);

@@ -56,6 +56,7 @@ class uploaded_img{
 class File {
 
     const BUSINESS_LOGO = '/private/data/business/logo';
+    const USER_AVATAR = '/private/data/users/avatar';
 
     static public function get_img_path($path, $ID){
         $file_path = $path.'/'.$ID.'.jpg';

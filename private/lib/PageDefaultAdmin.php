@@ -48,7 +48,7 @@ class PageDefaultAdmin {
         echo'<div class="sidebar-wrapper">
                 <div class="user">
                     <div class="photo">
-                        <img src="/public/img/default-avatar.png" />
+                        <img src="'.File::get_img_path(File::USER_AVATAR,$user_info->ID).'" />
                     </div>
                     <div class="info">
                         <a data-toggle="collapse" href="#collapseExample" class="collapsed">
@@ -58,13 +58,7 @@ class PageDefaultAdmin {
                         <div class="collapse" id="collapseExample">
                             <ul class="nav">
                                 <li>
-                                    <a href="#">Mon Profil</a>
-                                </li>
-                                <li>
-                                    <a href="#">Modifier mon Profil</a>
-                                </li>
-                                <li>
-                                    <a href="#">Paramétres</a>
+                                    <a href="index.php?admin=true&nav=current_user&part=index">Mon Profil</a>
                                 </li>
                             </ul>
                         </div>
@@ -106,7 +100,7 @@ class PageDefaultAdmin {
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">
                             <li>
-                                <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
+                                <a href="index.php?admin=true&nav=home&part=index">
                                     <i class="material-icons">dashboard</i>
                                     <p class="hidden-lg hidden-md">Tableau de Bord</p>
                                 </a>
@@ -127,7 +121,7 @@ class PageDefaultAdmin {
                                 </ul>
                             </li>
                             <li>
-                                <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
+                                <a href="index.php?admin=true&nav=current_user&part=index">
                                     <i class="material-icons">person</i>
                                     <p class="hidden-lg hidden-md">Mon Profil</p>
                                 </a>

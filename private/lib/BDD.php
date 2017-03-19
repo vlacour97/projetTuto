@@ -423,7 +423,6 @@ SELECT students.*,groups.label as "group", (SELECT ID_prop FROM linkstudentprop 
      */
     static public function add_student($ID, $ID_group, $name, $fname, $email, $phone, $INE, $address, $zip_code, $city, $country, $informations, $birth_date){
         self::init();
-        if(boolval(count(self::$PDO->query('SELECT * FROM students WHERE ID='.$ID)->fetchAll())))   throw new \Exception('L\'utilisateur existe déjà');
         $query = self::$PDO->prepare('
 INSERT INTO students(ID,ID_group, name, fname, email, phone, INE, address, zip_code, city, country, informations, creation_date, birth_date)
 VALUES (:ID,:ID_group, :name, :fname, :email, :phone, :INE, :address, :zip_code, :city, :country, :informations, NOW(), :birth_date);');
@@ -812,6 +811,27 @@ UPDATE linkcontinuities SET deletion_date = NOW() WHERE id_prop = :ID;');
         self::init();
         $query = self::$PDO->prepare('UPDATE continuities SET label = :label WHERE ID = :ID;');
         return $query->execute([':label'=> $label, ':ID' => $ID]);
+    }
+
+    /**
+     * Permet de modifier les informations d'un utilisateur
+     * @param $ID int
+     * @param $fname string
+     * @param $name string
+     * @param $email string
+     * @param $phone string
+     * @return bool
+     */
+    static public function edit_user($ID,$fname,$name,$email,$phone){
+        self::init();
+        $query = self::$PDO->prepare('UPDATE users SET fname = :fname, name = :name, email = :email, phone = :phone where ID = :ID;');
+        return $query->execute([':fname'=> $fname, ':name' => $name, ':email' => $email, ':phone' => $phone,':ID' => $ID]);
+    }
+
+    static public function change_user_password($ID,$password){
+        self::init();
+        $query = self::$PDO->prepare('UPDATE users SET password = md5(:password) where ID = :ID;');
+        return $query->execute([':password'=> $password,':ID' => $ID]);
     }
 
     /**
