@@ -20,6 +20,7 @@
                         </p>
                         <?= $this->_setLink(str_replace(' ','',$var->data->phone),'callto',['class'=>'btn btn-info btn-round','title' => 'Appelez moi !']) ?>
                         <?= $this->_setLink('Retourner la liste des entreprises',['part'=>'index'],['class'=>'btn btn-default btn-round']) ?>
+                        <? if(count(get_object_vars($var->propositions)) != 0) { echo $this->_setLink('Récupérer la liste des propositions en PDF',['nav'=>'pdf','part'=>'business_prop_list','id'=>$var->global->get->id],['class'=>'btn btn-warning btn-round','target'=>'_blank']); }?>
                         <?= $this->_setLink($var->data->mail,'mailto',['class'=>'btn btn-primary btn-round','title' => 'Ecrivez-moi !']) ?>
                     </div>
                 </div>

@@ -1,0 +1,43 @@
+<style type="text/css">
+    table { vertical-align: top; border: 1px solid #222222; font-size: 90%;}
+    tr    { vertical-align: top; }
+    td    { vertical-align: top; border: 1px dashed #ccc; }
+    td    { display: block}
+</style>
+<page backcolor="#FEFEFE" backimgx="center" backimgy="bottom" backimgw="100%" backtop="10mm" backbottom="30mm" backleft="10mm" backright="10mm"  footer="date;heure;page" style="font-size: 10pt">
+    <h1 style="text-align: center"><?= $var->titlePage ?></h1>
+    <table cellspacing="0" width="100%" style="width:100%; max-width: 100%">
+        <thead>
+        <tr>
+            <th style="width: 10%; text-align: center">ID</th>
+            <th style="width: 15%">Nom</th>
+            <th style="width: 10%">Groupe</th>
+            <th style="width: 35%">Adresse</th>
+            <th style="width: 10%">Téléphone</th>
+            <th style="width: 20%">Mail</th>
+        </tr>
+        </thead>
+        <tfoot>
+        <tr>
+            <th style="width: 10%; text-align: center">ID</th>
+            <th style="width: 15%">Nom</th>
+            <th style="width: 10%">Groupe</th>
+            <th style="width: 35%">Adresse</th>
+            <th style="width: 10%">Téléphone</th>
+            <th style="width: 20%">Mail</th>
+        </tr>
+        </tfoot>
+        <tbody>
+        <? foreach($var->tabStudents as $key=>$content) { ?>
+        <tr>
+            <td style="width: 10%; text-align: center"><?= $content->ID ?></td>
+            <td style="width: 15%"><?= $content->fname.' '.$content->name?></td>
+            <td style="width: 10%"><?= $content->group?></td>
+            <td style="width: 35%"><?= \lib\Text::format_address($content->address,$content->zip_code,$content->city,$content->country) ?></td>
+            <td style="width: 10%"><?= $content->phone?></td>
+            <td style="width: 20%"><?= $content->email?></td>
+        </tr>
+        <? } ?>
+        </tbody>
+    </table>
+</page>
