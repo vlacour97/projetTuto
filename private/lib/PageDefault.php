@@ -21,6 +21,7 @@ class PageDefault {
         echo $html->meta(['name'=>'viewport', 'content' => 'width=device-width, initial-scale=1.0']);
         echo $html->meta(['name' => 'viewport']);
         echo '<title>'.$config->getName().'</title>';
+        echo '<link rel="icon" type="image/png" href="/public/img/logo.png" />';
         echo $html->css('bootstrap.min.css');
         echo $html->css('font-awesome.min.css');
         echo $html->css('themify-icons.css');

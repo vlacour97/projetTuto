@@ -21,6 +21,7 @@ class PageDefaultAdmin {
         echo $html->meta(['name'=>'viewport', 'content' => 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0']);
         echo $html->meta(['name' => 'viewport', 'content' => 'width=device-width']);
         echo '<title>'.$config->getName().' - Administration</title>';
+        echo '<link rel="icon" type="image/png" href="/public/img/logo.png" />';
         echo $html->css('bootstrap.min.css');
         echo $html->css('material-dashboard.css');
         echo $html->css('font-awesome.min.css');
