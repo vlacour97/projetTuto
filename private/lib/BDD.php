@@ -304,9 +304,9 @@ ORDER BY table2.csop DESC;');
     static public function get_internship_evolution(){
         self::init();
         $query = self::$PDO->prepare('
-SELECT count(linkstudentprop.ID) as nbStudent, DATE(linkstudentprop.creation_date) as date FROM linkstudentprop
-WHERE deletion_date IS NULL
-GROUP BY DATE(linkstudentprop.creation_date)
+SELECT count(linkstudentprop.ID_student) as nbStudent, MONTH(linkstudentprop.creation_date) as date FROM linkstudentprop
+WHERE linkstudentprop.creation_date BETWEEN  DATE_ADD(NOW(), INTERVAL -12 MONTH) AND NOW()
+GROUP BY MONTH(linkstudentprop.creation_date)
 ORDER BY linkstudentprop.creation_date;');
         $query->execute();
         return DataFormatter::convert_array_to_object($query->fetchAll(\PDO::FETCH_ASSOC));
@@ -319,10 +319,12 @@ ORDER BY linkstudentprop.creation_date;');
     static public function get_general_info(){
         self::init();
         $query = self::$PDO->prepare('SELECT
-  (SELECT count(linkstudentprop.ID) FROM linkstudentprop WHERE deletion_date IS NULL) as nbTrainee,
+  (SELECT count(linkstudentprop.ID_student) FROM linkstudentprop) as nbTrainee,
+  (SELECT count(students.ID) FROM students WHERE deletion_date IS NULL) as nbStudents,
+  (SELECT count(business.ID) FROM business WHERE partner AND deletion_date IS NULL) as nbPartner,
   (SELECT count(propositions.ID) FROM propositions WHERE deletion_date IS NULL) as nbPropositions,
   (SELECT count(business.ID) FROM business WHERE deletion_date IS NULL) as nbBusiness,
-  (SELECT count(linkstudentprop.ID) FROM linkstudentprop WHERE deletion_date IS NULL)/(SELECT count(students.ID) FROM students WHERE deletion_date IS NULL) * 100 as percentOfFindJob;');
+  (SELECT count(linkstudentprop.ID_student) FROM linkstudentprop)/(SELECT count(students.ID) FROM students WHERE deletion_date IS NULL) * 100 as percentOfFindJob;');
         $query->execute();
         return DataFormatter::convert_array_to_object($query->fetchAll(\PDO::FETCH_ASSOC)[0]);
     }
@@ -334,8 +336,8 @@ ORDER BY linkstudentprop.creation_date;');
     static public function get_student_list_without_internship(){
         self::init();
         $query = self::$PDO->prepare('
-SELECT * FROM students
-WHERE students.ID NOT IN (SELECT ID_student FROM linkstudentprop) AND deletion_date IS NULL;');
+SELECT students.*, groups.label as "group",(SELECT ID_prop FROM linkstudentprop WHERE ID_student = students.ID) as ID_prop FROM students,groups
+WHERE students.ID_group = groups.ID AND students.ID NOT IN (SELECT ID_student FROM linkstudentprop) AND students.deletion_date IS NULL;');
         $query->execute();
         return DataFormatter::convert_array_to_object($query->fetchAll(\PDO::FETCH_ASSOC));
     }

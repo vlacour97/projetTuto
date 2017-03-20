@@ -12,10 +12,10 @@ namespace lib;
 class Date
 {
     private $datetime;
-    static private $week = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
-    static private $cutWeek = ['Lun.','Mar.','Mer.','Jeu.','Vend.','Sam.','Dim.'];
-    static private $month = ['Janvier','Fevrier','Mars','Avril','Mai','Juin','Juillet',"Aout", "Septembre","Octobre", "Novembre", "Decembre"];
-    static private $cutMonth = ["Jan.", "Fév.", "Mars", "Avr.", "Mai", "Juin", "Juil.", "Aout", "Sept.", "Oct.", "Nov.", "Dec."];
+    static public $week = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
+    static public $cutWeek = ['Lun.','Mar.','Mer.','Jeu.','Vend.','Sam.','Dim.'];
+    static public $month = ['Janvier','Fevrier','Mars','Avril','Mai','Juin','Juillet',"Aout", "Septembre","Octobre", "Novembre", "Decembre"];
+    static public $cutMonth = ["Jan.", "Fév.", "Mars", "Avr.", "Mai", "Juin", "Juil.", "Aout", "Sept.", "Oct.", "Nov.", "Dec."];
     static private $connector = ["at"=> "à", "y_s"=> "an", "m_s"=> "mois", "d_s"=> "jour", "h_s"=> "heure", "min_s"=> "minute", "s_s"=> "seconde", "y_p"=> "an", "m_p"=> "mois", "d_p"=> "jours", "h_p"=> "heures", "min_p"=> "minutes", "s_p"=> "secondes", "h"=> "h", "min"=> "min", "s"=> "sec"];
 
     //CONSTRUCTEUR

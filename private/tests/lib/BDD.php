@@ -26,11 +26,11 @@ var_dump(\lib\BDD::get_proposition_info(1));*/
 //var_dump(\lib\BDD::get_student_list());
 //var_dump(\lib\BDD::get_student_info(17));
 //var_dump(\lib\BDD::get_group_list());
-try{
+/*try{
     var_dump(\lib\BDD::add_student(9,1,'Test12','TestFname12','','','','','','','','','1997-02-10'));
 }catch (Exception $e){
     echo $e->getMessage();
-}
+}*/
 //var_dump(\lib\BDD::add_business('Ma boite','','','','','','','','','',false));
 /*try{
     var_dump(\lib\BDD::add_proposition(17,'Mon Stage 2','243 Rue Jules Barni','80000','Amiens','FR','','2mois','',1));
@@ -38,3 +38,5 @@ try{
     echo $e->getMessage();
 }*/
 //var_dump(\lib\BDD::link_student_to_proposition(1,13));
+//var_dump(\lib\BDD::get_general_info());
+var_dump(\lib\BDD::get_internship_evolution());

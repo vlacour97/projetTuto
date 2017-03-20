@@ -10,6 +10,7 @@ namespace controllers\admin;
 
 
 use lib\BDD;
+use lib\Date;
 use lib\PageTemplate;
 
 class PageHome extends PageTemplate{
@@ -18,32 +19,26 @@ class PageHome extends PageTemplate{
         if(!$this->_isConnected())
             $this->_redirect('login','index',false,true);
         parent::__construct();
+        $this->var->titlePage = "Tableau de bord";
     }
 
     function _index(){
-        $this->var->home = "Coucou";
-        $this->var->name = "John Doe";
-        $this->var->titlePage = "Tableau de bord";
-        var_dump($this->_isConnected());
-    }
-
-    function _remi(){
-        $this->var->test = BDD::get_student_list();
-    }
-
-    function _create_user(){
-        $name = $this->global->get->name;
-        $fname = $this->global->get->fname;
-        if(!is_null($name,$fname)) {
-            try{
-                if(BDD::add_student(13,1,$name,$fname,'','','','','','','','','0000-00-00'))
-                    echo json_encode(['success' => 'TRUE']);
-                else
-                    echo json_encode(['success' => 'FALSE']);
-            }catch(\Exception $e){
-                echo json_encode(['error' => $e->getMessage()]);
+        $this->var->tabEntreprises = BDD::get_business_ranking();
+        $this->var->cardsData = BDD::get_general_info();
+        $evolutionData = BDD::get_internship_evolution();
+        $this->var->dataChart[-1] = 0;
+        $evolIte = 0;
+        for($i=0;$i<12;$i++){
+            $current_month = (date('n')+$i)%12;
+            $this->var->monthList[] = "'".Date::$cutMonth[(date('n')+$i)%12]."'";
+            $this->var->dataChart[$i] = $this->var->dataChart[$i-1];
+            if(intval($evolutionData->{$evolIte}->date) == $current_month+1){
+                $this->var->dataChart[$i] += $evolutionData->{$evolIte}->nbStudent;
+                $evolIte++;
             }
         }
+        unset($this->var->dataChart[-1]);
+        $this->var->tabStudents = BDD::get_student_list_without_internship();
     }
 
 } 
