@@ -417,6 +417,12 @@ SELECT students.*,groups.label as "group", (SELECT ID_prop FROM linkstudentprop 
         return DataFormatter::convert_array_to_object($query->fetchAll(\PDO::FETCH_ASSOC)[0]);
     }
 
+    static public function user_was_connected($id){
+        self::init();
+        $query = self::$PDO->prepare('UPDATE users SET last_login=NOW() WHERE ID = :id;');
+        return $query->execute([':id' => $id]);
+    }
+
     /**
      * Ajoute un étudiant
      * @param $ID int

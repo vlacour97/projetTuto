@@ -309,6 +309,7 @@ class PageTemplate extends PageDefault{
             unset($_SESSION[self::connexion_tag]);
             return false;
         }
+        BDD::user_was_connected($response->ID);
         return true;
     }
 
